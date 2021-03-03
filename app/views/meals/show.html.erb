@@ -1,0 +1,6 @@
+<%= render @meal %>
+<%= link_to raw('<i class="far fa-trash-alt fa-lg"></i>'), 
+        meal_path(@meal),
+        method: :delete,
+        data: { confirm: "Delete #{@meal.name}?" } %></li> 
+    <% end %>
