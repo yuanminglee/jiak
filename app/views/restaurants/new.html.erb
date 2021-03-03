@@ -1,12 +1,6 @@
 <h1>LETS CREATE A RESTAURANT</h1>
 
-<%= simple_form_for(@restaurant) do |f| %>
-  <%= f.input :name %>
-  <%= f.input :address %>
-  <%= f.input :description %>
-  <%= f.input :opening_days %>
-  <%= f.submit %>
-<% end %>
+<%= render "form", restaurant: @restaurant %>
 
 <p><%= link_to "back to all restaurants", restaurants_path %></p>
 
