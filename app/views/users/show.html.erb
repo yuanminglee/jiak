@@ -4,7 +4,9 @@
     <div>
       <h2><%= current_user.name %></h2>
       <p><%= current_user.is_chef ? "Chef" : "Customer" %></p>
+      <p><%= current_user.description %></p>
     </div>
+    <%= link_to "Edit profile", edit_user_registration_path %>
     <img src="https://kitt.lewagon.com/placeholder/users/krokrob" class="card-trip-user avatar-bordered" />
   </div>
 </div>
