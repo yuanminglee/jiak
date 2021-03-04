@@ -14,6 +14,7 @@
                 autofocus: true %>
     <%= f.input :is_chef,
                 autofocus: true %>
+    <%= f.input :photo, as: :file, label: "Profile photo" %>
     <%= f.input :email, required: true, autofocus: true %>
 
     <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
