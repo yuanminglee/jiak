@@ -1,44 +1,41 @@
 class MealsController < ApplicationController
+  before_action :find_meal, only: [:show, :edit, :update, :destroy]
+  before_action :find_restaurant, only: [:index, :show, :new, :create, :edit, :update, :destroy]
+
   def index
-    restaurant = Restaurant.find(params[:restaurant_id])
-    @meals = Meal.where(restaurant_id: restaurant)
+    @meals = Meal.where(restaurant_id: @restaurant)
   end
 
-  def show
-    @meal = Meal.find(params[:id])
-  end
+  def show; end
 
   def new
-    @restaurant = Restaurant.find(params[:restaurant_id])
     @meal = Meal.new
   end
 
   def create
-    restaurant = Restaurant.find(params[:restaurant_id])
     @meal = Meal.new(meal_params)
-    @meal.restaurant = restaurant
+    @meal.restaurant = @restaurant
     @meal.save
-    # if @meal.save
-    #     redirect_to restaurant    
-    # else
-    #   render :new
-    # end
+    if @meal.save
+      redirect_to restaurant_meals_path(@restaurant)
+    else
+      render :new
+    end
   end
 
-  def edit
-    @restaurant = Restaurant.find(params[:restaurant_id])
-    @meal = Meal.find(params[:id])
-  end
+  def edit; end
 
   def update
-    @meal = Meal.find(params[:id])
-    @meal.update(meal_params)
+    if @meal.update(meal_params)
+      redirect_to restaurant_meals_path(@restaurant)
+    else
+      render :edit
+    end
   end
 
   def destroy
-    meal = Meal.find(params[:id])
-    meal.destroy
-    redirect_to root_path
+    @meal.destroy
+    redirect_to restaurant_meals_path(@restaurant)
   end
 
   private
@@ -46,5 +43,12 @@ class MealsController < ApplicationController
   def meal_params
     params.require(:meal).permit(:name, :description, :ingredients, :price, :pax)
   end
-end
 
+  def find_meal
+    @meal = Meal.find(params[:id])
+  end
+
+  def find_restaurant
+    @restaurant = Restaurant.find(params[:restaurant_id])
+  end
+end

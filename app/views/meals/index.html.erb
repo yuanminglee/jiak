@@ -1,2 +1,9 @@
-<%= render @meals %>
-  
+<% @meals.each do |meal| %>
+  <h2><%= link_to meal.name, restaurant_meal_path(@restaurant, meal) %></h2>
+  <p><%= meal.description %></p>
+  <p><%= meal.ingredients %></p>
+  <p><%= meal.price %></p>
+  <p><%= meal.pax %></p>
+<% end %>
+
+<%= link_to "Add Meal",  new_restaurant_meal_path %>
