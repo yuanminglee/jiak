@@ -3,7 +3,7 @@
   <%= cl_image_tag meal.photo.key, height: 200, width: 300, crop: :fill %>
   <p><%= meal.description %></p>
   <p><%= meal.ingredients %></p>
-  <p><%= meal.price %></p>
+  <p>$<%= meal.price %></p>
   <p><%= meal.pax %></p>
 <% end %>
 
