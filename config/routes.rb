@@ -1,7 +1,12 @@
 Rails.application.routes.draw do
   root to: 'pages#home'
-  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
+
+  devise_for :users
+
+  get 'profile', to: 'users#show', as: 'user_profile'
+
   resources :restaurants do 
     resources :meals
   end
-  end
+
+end
