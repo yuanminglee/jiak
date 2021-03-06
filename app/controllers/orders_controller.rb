@@ -1,7 +1,7 @@
 class OrdersController < ApplicationController
   before_action :find_order, only: %i[edit update update_price]
   after_action :update_price, only: %i[update]
-  
+
 
   def create
     @order = Order.new(order_params)
