@@ -1,17 +1,20 @@
 <h1>resto name</h1>
 <p><%= @restaurant.name %></p>
 
-<h2>resto address</h2>
+<h1>resto address</h1>
 <p><%= @restaurant.address %></p>
 
-<h3>resto description</h3>
+<h1>resto description</h1>
 <p><%= @restaurant.description %></p>
 
-<h4>resto collection time</h4>
+<h1>resto collection time</h1>
 <p><%= @restaurant.collection_time %></p>
 
-<h4>resto opening days</h4>
+<h1>resto opening days</h1>
 <p><%= @restaurant.opening_days %></p>
 
-<%= link_to 'Edit', edit_restaurant_path(@restaurant) %>
-<%= link_to "back to all restaurants", restaurants_path %>
+<%= link_to 'Edit', edit_restaurant_path(@restaurant), class: 'btn btn-primary' %>
+
+<div class="link">
+  <%= link_to "back to all restaurants", restaurants_path %>
+</div>
