@@ -6,6 +6,8 @@ class RestaurantsController < ApplicationController
   end
 
   def show
+    @order = Order.new
+    @order.restaurant = @restaurant
   end
 
   def new

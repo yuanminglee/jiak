@@ -1,4 +1,4 @@
-<h2>@meal.name</h2>
+<h2><%= @meal.name %></h2>
 <%= simple_form_for [ @restaurant, @meal ] do |f| %>
   <%= f.input :name %>
   <%= f.input :description %>
