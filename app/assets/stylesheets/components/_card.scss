@@ -15,55 +15,43 @@
   margin-top: 20px;
 }
 
-.card {
-  overflow: hidden;
-  min-height: 300px;
-  background: white;
-  box-shadow: 0 0 15px rgba(0,0,0,0.2);
-  align-items: top;
-  padding: 16px;
-
-  h2 {
-    text-align: center;
-  }
-
-  table {
-    margin: auto;
-  }
-}
-
 .card-product {
   overflow: hidden;
-  min-height: 300px;
+  height: 120px;
   background: white;
   box-shadow: 0 0 15px rgba(0,0,0,0.2);
   display: flex;
-  align-items: top;
-}
+  align-items: center;
 
-.card-product img {
-  width: 200px;
-  object-fit: cover;
-}
+  img {
+    height: 100%;
+    width: 120px;
+    object-fit: cover;
+  }
 
-.card-product h1 {
-  font-size: 50px;
-  font-weight: bold;
-  margin: 0;
-}
+  h2 {
+    font-size: 16px;
+    font-weight: bold;
+    margin: 0;
+  }
 
-.card-product p {
-  font-size: 18px;
-  line-height: 1.4;
-  opacity: .7;
-  margin-bottom: 0;
-  margin-top: 8px;
-}
+  p {
+    font-size: 12px;
+    line-height: 1.4;
+    opacity: .7;
+    margin-bottom: 0;
+    margin-top: 8px;
+  }
 
-.card-product table {
-  border: none;
-}
+  a {
+    height: 100%;
+  }
 
-.card-product .card-product-infos {
-  padding: 40px 16px 20px 16px;
+  .card-product-infos {
+  padding: 16px;
+  }
+
+  &:hover {
+    border: 3px solid green;
+  }
 }
