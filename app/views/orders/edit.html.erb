@@ -21,6 +21,7 @@
   <% @order.line_items.each do |line_item| %>
     <li>
       <strong><%= line_item.meal.name %>:</strong> <%= line_item.quantity %>
+      <%= link_to("Remove item", line_item_path(line_item), method: :delete, data: { confirm: "Are you sure?" }) %>
     </li>
   <% end %>
 </ul>

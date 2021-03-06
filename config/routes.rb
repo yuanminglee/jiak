@@ -9,6 +9,8 @@ Rails.application.routes.draw do
   end
 
   resources :orders do
-    resources :line_items
+    resources :line_items, except: :destroy
   end
+
+  resources :line_items, only: :destroy
 end
