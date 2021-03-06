@@ -13,5 +13,13 @@
 <h4>resto opening days</h4>
 <p><%= @restaurant.opening_days %></p>
 
+
 <%= link_to 'Edit', edit_restaurant_path(@restaurant) %>
 <%= link_to "back to all restaurants", restaurants_path %>
+<%= link_to "Remove",
+  restaurant_path(@restaurant),
+  method: :delete,
+  data: { confirm: "Are you sure?"}
+%>
+
+
