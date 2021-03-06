@@ -1,5 +1,6 @@
 <h1><%= @restaurant.name %></h1>
 <p><small><%= @restaurant.description %></small></p>
+
 <p>
   <strong>Opening days: </strong>
   <%= @restaurant.opening_days %>
@@ -18,14 +19,19 @@
 
 <%= link_to 'Add meal', new_restaurant_meal_path(@restaurant) %> |
 <%= link_to 'Edit', edit_restaurant_path(@restaurant) %> |
-<%= link_to "Back", restaurants_path %>
+<%= link_to "Back", restaurants_path %> |
+<%= link_to "Remove",
+  restaurant_path(@restaurant),
+  method: :delete,
+  data: { confirm: "Are you sure?"}
+%>
 
 <div class="container mt-3">
   <h4>Order now</h4>
   <%= simple_form_for @order do |f| %>
     <%= f.input :collection_date %>
     <%= f.hidden_field :restaurant_id, :value => @order.restaurant.id %>
-    <%= f.button :submit %>
+    <%= f.button :submit, :class => "btn btn-primary" %>
   <% end %>
 </div>
 
