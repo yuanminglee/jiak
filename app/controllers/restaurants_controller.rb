@@ -2,10 +2,12 @@ class RestaurantsController < ApplicationController
   before_action :find_restaurant, only: [:show, :edit, :update, :destroy]
 
   def index
-    @restaurants = Restaurant.all
+    @restaurants = Restaurant.order(:id)
   end
 
   def show
+    @order = Order.new
+    @order.restaurant = @restaurant
   end
 
   def new

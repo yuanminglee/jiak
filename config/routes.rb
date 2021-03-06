@@ -4,7 +4,13 @@ Rails.application.routes.draw do
 
   get 'profile', to: 'users#show', as: 'user_profile'
 
-  resources :restaurants do 
+  resources :restaurants do
     resources :meals
   end
+
+  resources :orders do
+    resources :line_items, except: :destroy
+  end
+
+  resources :line_items, only: :destroy
 end
