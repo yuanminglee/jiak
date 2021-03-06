@@ -18,15 +18,15 @@
 </p>
 
 
-<%= link_to 'Edit', edit_restaurant_path(@restaurant) %> |
-<%= link_to "Back", restaurants_path %>
+<%= link_to 'Edit', edit_restaurant_path(@restaurant), :class => "btn btn-primary" %> |
+<%= link_to "Back", restaurants_path, :class => "btn btn-info" %>
 
 <div class="container mt-3">
   <h4>Order now</h4>
   <%= simple_form_for @order do |f| %>
     <%= f.input :collection_date %>
     <%= f.hidden_field :restaurant_id, :value => @order.restaurant.id %>
-    <%= f.button :submit %>
+    <%= f.button :submit, :class => "btn btn-primary" %>
   <% end %>
 </div>
 
