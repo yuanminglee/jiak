@@ -21,7 +21,7 @@
 }
 
 .btn-flat:hover {
-  background: #1BCB7F;
+  background: #3ba378;
   color: white;
 }
 
@@ -29,13 +29,13 @@
   color: white;
   padding: 8px 24px;
   border-radius: 4px;
-  font-weight: bold;
+  font-weight: normal;
   background: linear-gradient(#167FFB, #0F60C4);
   transition: background 0.3s ease;
   border: 1px solid #0F60C4;
 }
 
 .btn-gradient:hover {
-  background: linear-gradient(#147EFF, #0F67DA);
+  background: linear-gradient(#147EFF, #113463);
   color: white;
 }

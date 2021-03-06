@@ -1,5 +1,6 @@
 <h1><%= @restaurant.name %></h1>
 <p><small><%= @restaurant.description %></small></p>
+
 <p>
   <strong>Opening days: </strong>
   <%= @restaurant.opening_days %>
@@ -16,7 +17,6 @@
   <%= @restaurant.collection_time.strftime('%l:%M%p') %>
 </p>
 
-
 <%= link_to 'Edit', edit_restaurant_path(@restaurant) %> |
 <%= link_to "Back", restaurants_path %>
 <%= link_to "Remove",
@@ -30,7 +30,7 @@
   <%= simple_form_for @order do |f| %>
     <%= f.input :collection_date %>
     <%= f.hidden_field :restaurant_id, :value => @order.restaurant.id %>
-    <%= f.button :submit %>
+    <%= f.button :submit, :class => "btn btn-primary" %>
   <% end %>
 </div>
 
