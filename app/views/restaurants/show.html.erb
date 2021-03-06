@@ -17,9 +17,13 @@
   <%= @restaurant.collection_time.strftime('%l:%M%p') %>
 </p>
 
-
-<%= link_to 'Edit', edit_restaurant_path(@restaurant), :class => "btn btn-primary" %> |
-<%= link_to "Back", restaurants_path, :class => "btn btn-info" %>
+<%= link_to 'Edit', edit_restaurant_path(@restaurant) %> |
+<%= link_to "Back", restaurants_path %>
+<%= link_to "Remove",
+  restaurant_path(@restaurant),
+  method: :delete,
+  data: { confirm: "Are you sure?"}
+%>
 
 <div class="container mt-3">
   <h4>Order now</h4>

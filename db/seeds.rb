@@ -6,6 +6,7 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
+
 require 'faker'
 
 puts 'creating 100 restaurants'
@@ -20,3 +21,4 @@ puts 'creating 100 restaurants'
 end
 
 puts "restos created!"
+
