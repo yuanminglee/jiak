@@ -16,7 +16,7 @@
   <%= @restaurant.collection_time.strftime('%l:%M%p') %>
 </p>
 
-
+<%= link_to 'Add meal', new_restaurant_meal_path(@restaurant) %> |
 <%= link_to 'Edit', edit_restaurant_path(@restaurant) %> |
 <%= link_to "Back", restaurants_path %>
 
