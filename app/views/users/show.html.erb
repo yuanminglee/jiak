@@ -1,0 +1,12 @@
+<div class="card-trip">
+  <img src="https://raw.githubusercontent.com/lewagon/fullstack-images/master/uikit/greece.jpg" />
+  <div class="card-trip-infos">
+    <div>
+      <h2><%= current_user.name %></h2>
+      <p><%= current_user.is_chef ? "Chef" : "Customer" %></p>
+      <p><%= current_user.description %></p>
+    </div>
+    <%= link_to "Edit profile", edit_user_registration_path %>
+    <%= cl_image_tag current_user.photo.key, class: "card-trip-user avatar-bordered" %>
+  </div>
+</div>

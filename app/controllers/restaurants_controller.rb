@@ -1,32 +1,33 @@
 class RestaurantsController < ApplicationController
+  before_action :find_restaurant, only: [:show, :edit, :update, :destroy]
   
   def index
     @restaurants = Restaurant.all
   end
 
   def show
-    @restaurant = Restaurant.find(params[:id])
   end
 
-  def new
-    @restaurant = Restaurant.new
+  def edit
   end
 
-  def create
-    @restaurant = Restaurant.new(restaurant_params)
-    if @restaurant.save
-      redirect_to restaurants_path(@restaurant)
-    else
-      render :new
-    end
+  def update
+    @restaurant.update(restaurant_params)
+    redirect_to restaurant_path(@restaurant)
   end
 
-  
+  def destroy
+    @restaurant.destroy
+    redirect_to restaurants_path
+  end
 
   private
 
   def restaurant_params
-    params.require(:restaurant).permit(:name, :address, :description, :opening_days)
+    params.require(:restaurant).permit(:name, :description, :address, :collection_time, :opening_days)
   end
 
+  def find_restaurant
+    @restaurant = Restaurant.find(params[:id])
+  end
 end
