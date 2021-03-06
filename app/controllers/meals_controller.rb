@@ -3,7 +3,7 @@ class MealsController < ApplicationController
   before_action :find_restaurant, only: [:index, :show, :new, :create, :edit, :update, :destroy]
 
   def index
-    @meals = Meal.where(restaurant_id: @restaurant)
+    @meals = @restaurant.meals
   end
 
   def show; end
