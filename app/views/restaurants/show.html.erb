@@ -1,50 +1,73 @@
-<h1><%= @restaurant.name %></h1>
-<p><small><%= @restaurant.description %></small></p>
-
-<p>
-  <strong>Opening days: </strong>
-  <%= @restaurant.opening_days %>
-</p>
-
-<h4>Collection details</h4>
-<p>
-  <strong>Collection address: </strong>
-  <%= @restaurant.address %>
-</p>
-
-<p>
-  <strong>Collection time: </strong>
-  <%= @restaurant.collection_time.strftime('%l:%M%p') %>
-</p>
-
-<%= link_to 'Add meal', new_restaurant_meal_path(@restaurant) %> |
-<%= link_to 'Edit', edit_restaurant_path(@restaurant) %> |
-<%= link_to "Back", restaurants_path %> |
-<%= link_to "Remove",
-  restaurant_path(@restaurant),
-  method: :delete,
-  data: { confirm: "Are you sure?"}
-%>
-
-<div class="container mt-3">
-  <h4>Order now</h4>
-  <%= simple_form_for @order do |f| %>
-    <%= f.input :collection_date %>
-    <%= f.hidden_field :restaurant_id, :value => @order.restaurant.id %>
-    <%= f.button :submit, :class => "btn btn-primary" %>
+<div class="card-trip">
+  <% if @restaurant.photo.attached? %>
+    <%= cl_image_tag @restaurant.photo.key %>
+  <% else %>
+    <%= image_tag "https://raw.githubusercontent.com/lewagon/fullstack-images/master/uikit/breakfast.jpg" %>
   <% end %>
-</div>
+  <div class="card-trip-infos">
+    <div>
+      <h2><%= @restaurant.name %></h2>
+      <p><%= @restaurant.description %></p>
+      <p class="mt-3">
+        <strong>Collection address: </strong>
+        <%= @restaurant.address %>
+      </p>
 
-<h4 class="mt-3">Meals</h4>
-<div class="card-group">
-  <% @restaurant.meals.each do |meal| %>
-    <div class="card">
-      <h2><%= link_to meal.name, restaurant_meal_path(@restaurant, meal) %></h2>
-      <%= cl_image_tag meal.photo.key, height: 200, width: 300, crop: :fill %>
-      <p><%= meal.description %></p>
-      <p><%= meal.ingredients %></p>
-      <p>$<%= meal.price %></p>
-      <p><%= meal.pax %></p>
+      <p>
+        <strong>Collection time: </strong>
+        <%= @restaurant.collection_time.strftime('%l:%M%p') %>
+      </p>
+
+      <div class="btn-group mt-3" role="group">
+        <%= link_to 'Add meal', new_restaurant_meal_path(@restaurant), class: "btn btn-ghost" %>
+        <%= link_to 'Edit', edit_restaurant_path(@restaurant), class: "btn btn-ghost" %>
+        <%= link_to "Remove",
+          restaurant_path(@restaurant),
+          method: :delete,
+          data: { confirm: "Are you sure?"},
+          class: "btn btn-ghost"
+        %>
+        <%= link_to "Back", restaurants_path, class: "btn btn-ghost" %>
+      </div>
+
+      <div class="container mt-3 pl-1">
+        <h2>Select date to order</h2>
+        <%= simple_form_for @order do |f| %>
+          <%= f.input :collection_date, label: false %>
+          <%= f.hidden_field :restaurant_id, :value => @order.restaurant.id %>
+          <%= f.button :submit, "Start ordering", :class => "btn btn-flat w-100" %>
+        <% end %>
+      </div>
+
     </div>
-  <% end %>
+    <div class="card-avatar">
+      <% if @restaurant.photo.attached? %>
+        <%= cl_image_tag @restaurant.user.photo.key, class: "avatar-bordered" %>
+      <% else %>
+        <%= image_tag "https://kitt.lewagon.com/placeholder/users/krokrob", class: "card-trip-user avatar-bordered" %>
+      <% end %>
+      <h3 class="mt-2"><%= @restaurant.user.name %></h2>
+    </div>
+  </div>
 </div>
+
+<h2 class="mt-5 font-weight-bold">Meals</h2>
+<% @restaurant.meals.each do |meal| %>
+  <div class="card-product mt-2">
+    <%= link_to restaurant_meal_path(@restaurant, meal) do %>
+      <% if meal.photo.attached? %>
+        <%= cl_image_tag meal.photo.key %>
+      <% else %>
+        <%= image_tag 'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1650&q=80' %>
+      <% end %>
+    <% end %>
+
+    <div class="card-product-infos">
+      <h2><%= link_to meal.name, restaurant_meal_path(@restaurant, meal), class: "text-dark" %></h2>
+      <p class="mt-0"><%= meal.description %></p>
+      <p><small><%= meal.ingredients %></small></p>
+      <p class="mt-0"><small>Serves <%= meal.pax || 1 %> pax</small></p>
+      <h5 class="mt-3">$<%= meal.price %></p>
+    </div>
+  </div>
+<% end %>

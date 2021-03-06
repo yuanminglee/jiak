@@ -1,53 +1,75 @@
-<h1><%= @restaurant.name %></h1>
-<p><small><%= @restaurant.description %></small></p>
-<p>
-  <strong>Opening days: </strong>
-  <%= @restaurant.opening_days %>
-</p>
-
-<h4>Collection details</h4>
-<p>
-  <strong>Collection address: </strong>
-  <%= @restaurant.address %>
-</p>
-
-<p>
-  <strong>Collection time: </strong>
-  <%= @restaurant.collection_time.strftime('%l:%M%p') %>
-</p>
-
-<h4>Current order:</h4>
-<ul>
-  
-  <% @order.line_items.each do |line_item| %>
-    <li>
-      <strong><%= line_item.meal.name %>:</strong> <%= line_item.quantity %>
-      <%= link_to("Remove item", line_item_path(line_item), method: :delete, data: { confirm: "Are you sure?" }) %>
-    </li>
-    
+<div class="card-trip">
+  <% if @restaurant.photo.attached? %>
+    <%= cl_image_tag @restaurant.photo.key %>
+  <% else %>
+    <%= image_tag "https://raw.githubusercontent.com/lewagon/fullstack-images/master/uikit/breakfast.jpg" %>
   <% end %>
-  <strong>Total Price: $</strong><%= @order.total_price %>
+  <div class="card-trip-infos">
+    <div>
+      <h2><%= @restaurant.name %></h2>
+      <p><%= @restaurant.description %></p>
+      <p class="mt-3">
+        <strong>Collection address: </strong>
+        <%= @restaurant.address %>
+      </p>
 
-   
-</ul>
+      <p>
+        <strong>Collection time: </strong>
+        <%= @restaurant.collection_time.strftime('%l:%M%p') %>
+      </p>
 
-<h4 class="mt-3">Choose your meals</h4>
-<div class="card-group">
-  <% @restaurant.meals.each do |meal| %>
-    <div class="card">
-      <h2><%= meal.name %></h2>
-      <%= cl_image_tag meal.photo.key, height: 200, width: 300, crop: :fill %>
-      <p><%= meal.description %></p>
-      <p><%= meal.ingredients %></p>
-      <p>$<%= meal.price %></p>
-      <p><%= meal.pax %></p>
-      <%= simple_form_for @order do |f| %>
-        <%= f.simple_fields_for :line_item do |line_item_f| %>
-          <%= line_item_f.hidden_field :meal_id, :value => meal.id %>
-          <%= line_item_f.input :quantity %>
-          <%= line_item_f.button :submit,'Add' %>
+      <h2 class="mt-3">Current order</h2>
+      <ul class="pl-0 mt-2">
+        <% @order.line_items.each do |line_item| %>
+          <li class="list-unstyled">
+            <%= line_item.meal.name %> x <%= line_item.quantity %>
+            <%= link_to line_item_path(line_item), method: :delete, data: { confirm: "Are you sure?" } do %>
+              <small><i class="fas fa-trash-alt ml-2 text-dark"></i></small>
+            <% end %>
+          </li>
         <% end %>
+        <h5 class="mt-2">Total: <strong><%= @order.total_price.format %></strong></h5>
+      </ul>
+
+    </div>
+    <div class="card-avatar">
+      <% if @restaurant.photo.attached? %>
+        <%= cl_image_tag @restaurant.user.photo.key, class: "avatar-bordered" %>
+      <% else %>
+        <%= image_tag "https://kitt.lewagon.com/placeholder/users/krokrob", class: "card-trip-user avatar-bordered" %>
+      <% end %>
+      <h3 class="mt-2"><%= @restaurant.user.name %></h2>
+    </div>
+  </div>
+</div>
+
+<h2 class="mt-5 font-weight-bold">Meals</h2>
+<% @restaurant.meals.each do |meal| %>
+  <div class="card-product mt-2">
+    <%= link_to restaurant_meal_path(@restaurant, meal) do %>
+      <% if meal.photo.attached? %>
+        <%= cl_image_tag meal.photo.key %>
+      <% else %>
+        <%= image_tag 'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1650&q=80' %>
+      <% end %>
+    <% end %>
+
+    <div class="card-product-infos">
+      <h2><%= link_to meal.name, restaurant_meal_path(@restaurant, meal), class: "text-dark" %></h2>
+      <p class="mt-0"><%= meal.description %></p>
+      <p><small><%= meal.ingredients %></small></p>
+      <p class="mt-0"><small>Serves <%= meal.pax || 1 %> pax</small></p>
+      <h5 class="mt-3 d-inline">$<%= meal.price %></h5>
+
+      <%= simple_form_for @order do |f| %>
+        <div class="form-inline">
+          <%= f.simple_fields_for :line_item do |line_item_f| %>
+            <%= line_item_f.hidden_field :meal_id, :value => meal.id %>
+            <%= line_item_f.input :quantity, label: false, placeholder: "Quantity", input_html: { class: "form-control-sm" } %>
+            <%= line_item_f.button :submit,'Add', class: "btn btn-dark btn-sm" %>
+          <% end %>
+        </div>
       <% end %>
     </div>
-  <% end %>
-</div>
+  </div>
+<% end %>
