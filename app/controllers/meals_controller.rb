@@ -17,7 +17,7 @@ class MealsController < ApplicationController
     @meal.restaurant = @restaurant
     @meal.save
     if @meal.save
-      redirect_to restaurant_meals_path(@restaurant)
+      redirect_to restaurant_path(@restaurant)
     else
       render :new
     end
@@ -35,7 +35,7 @@ class MealsController < ApplicationController
 
   def destroy
     @meal.destroy
-    redirect_to restaurant_meals_path(@restaurant)
+    redirect_to restaurant_path(@restaurant)
   end
 
   private

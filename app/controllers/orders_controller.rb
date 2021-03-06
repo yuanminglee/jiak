@@ -1,5 +1,7 @@
 class OrdersController < ApplicationController
-  before_action :find_order, only: %i[edit update]
+  before_action :find_order, only: %i[edit update update_price]
+  after_action :update_price, only: %i[update]
+  
 
   def create
     @order = Order.new(order_params)
@@ -25,6 +27,10 @@ class OrdersController < ApplicationController
 
   private
 
+  def update_price
+    @order.update_total_price
+  end
+
   def find_order
     @order = Order.find(params[:id])
   end
@@ -32,4 +38,5 @@ class OrdersController < ApplicationController
   def order_params
     params.require(:order).permit(:collection_date, :restaurant_id, line_item: [:meal_id, :quantity])
   end
+
 end
