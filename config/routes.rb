@@ -1,6 +1,5 @@
 Rails.application.routes.draw do
   root to: 'pages#home'
-
   devise_for :users
 
   get 'profile', to: 'users#show', as: 'user_profile'
@@ -8,5 +7,4 @@ Rails.application.routes.draw do
   resources :restaurants do 
     resources :meals
   end
-
 end
