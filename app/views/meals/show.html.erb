@@ -1,4 +1,4 @@
-<h3><%= @meal.name %></h3> 
+<h3><%= @meal.name %></h3>
 <%= cl_image_tag @meal.photo.key, height: 200, width: 300, crop: :fill %>
 <p><%= @meal.description %></p>
 <p><%= @meal.ingredients %></p>
@@ -6,7 +6,7 @@
 <p><%= @meal.pax %></p>
 
 <%= link_to raw('<i class="fas fa-pencil-alt fa-lg"></i>'), edit_restaurant_meal_path %>
-<%= link_to raw('<i class="far fa-trash-alt fa-lg"></i>'), 
+<%= link_to raw('<i class="far fa-trash-alt fa-lg"></i>'),
         restaurant_meal_path(@restaurant, @meal),
         method: :delete,
         data: { confirm: "Delete #{@meal.name}?" } %>
