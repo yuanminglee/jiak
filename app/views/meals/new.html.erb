@@ -1,0 +1,12 @@
+<h2>Create new meal</h2>
+<h3><%= @restaurant.name %></h3>
+<%= simple_form_for [ @restaurant, @meal ] do |f| %>
+  <%= f.input :name %>
+  <%= f.input :description %>
+  <%= f.input :ingredients %>
+  <%= f.input :price %>
+  <%= f.input :pax %>
+  <%= f.input :photo %>
+  <%= f.button :submit, class: 'btn btn-primary btn-block' %>
+<% end %>
+

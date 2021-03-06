@@ -5,6 +5,8 @@ Rails.application.routes.draw do
 
   get 'profile', to: 'users#show', as: 'user_profile'
 
-  resources :restaurants
+  resources :restaurants do 
+    resources :meals
+  end
 
 end
