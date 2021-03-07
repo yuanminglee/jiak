@@ -1,5 +1,5 @@
 class OrdersController < ApplicationController
-  before_action :find_order, only: %i[show edit update update_price]
+  before_action :find_order, only: %i[show edit update update_price cancel]
   after_action :update_price, only: %i[update]
 
   def show
@@ -28,6 +28,11 @@ class OrdersController < ApplicationController
     end
   end
 
+  def cancel
+    @order.update(status: 'Cancelled')
+    redirect_to restaurant_path(@order.restaurant), notice: "Your order is cancelled!"
+  end
+
   private
 
   def update_price
@@ -39,7 +44,7 @@ class OrdersController < ApplicationController
   end
 
   def order_params
-    params.require(:order).permit(:collection_date, :restaurant_id, line_item: [:meal_id, :quantity])
+    params.require(:order).permit(:collection_date, :restaurant_id, :status, line_item: [:meal_id, :quantity])
   end
 
 end

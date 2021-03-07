@@ -87,6 +87,12 @@
     font-weight: bold;
     margin: 0;
   }
+
+  .badge {
+    position: absolute;
+    right: 16px;
+    text-align: center;
+  }
 }
 
 .card-trip > img {
