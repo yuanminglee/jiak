@@ -1,7 +1,10 @@
 class OrdersController < ApplicationController
-  before_action :find_order, only: %i[edit update update_price]
+  before_action :find_order, only: %i[show edit update update_price]
   after_action :update_price, only: %i[update]
 
+  def show
+    @grouped_line_items = @order.line_items.group_by(&:meal)
+  end
 
   def create
     @order = Order.new(order_params)
