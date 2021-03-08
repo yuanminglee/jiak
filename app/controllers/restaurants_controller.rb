@@ -1,5 +1,5 @@
 class RestaurantsController < ApplicationController
-  before_action :find_restaurant, only: %i[show edit update destroy]
+  before_action :find_restaurant, only: %i[show edit update destroy orders]
 
   def index
     @restaurants = policy_scope(Restaurant).order(:id)
@@ -44,6 +44,9 @@ class RestaurantsController < ApplicationController
 
     @restaurant.destroy
     redirect_to restaurants_path
+  end
+
+  def orders
   end
 
   private

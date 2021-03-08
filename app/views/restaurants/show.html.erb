@@ -19,16 +19,15 @@
       </p>
 
       <div class="btn-group mt-3" role="group">
-        <% if policy(@restaurant).edit? %>
-          <%= link_to 'Add meal', new_restaurant_meal_path(@restaurant), class: "btn btn-ghost" %>
-          <%= link_to 'Edit', edit_restaurant_path(@restaurant), class: "btn btn-ghost" %>
-          <%= link_to "Remove",
-            restaurant_path(@restaurant),
-            method: :delete,
-            data: { confirm: "Are you sure?"},
-            class: "btn btn-ghost"
-           %>
-         <% end %>
+        <%= link_to 'Add meal', new_restaurant_meal_path(@restaurant), class: "btn btn-ghost" %>
+        <%= link_to 'View orders', orders_restaurant_path(@restaurant), class: "btn btn-ghost" %>
+        <%= link_to 'Edit', edit_restaurant_path(@restaurant), class: "btn btn-ghost" %>
+        <%= link_to "Remove",
+          restaurant_path(@restaurant),
+          method: :delete,
+          data: { confirm: "Are you sure?"},
+          class: "btn btn-ghost"
+        %>
         <%= link_to "Back", restaurants_path, class: "btn btn-ghost" %>
       </div>
 
