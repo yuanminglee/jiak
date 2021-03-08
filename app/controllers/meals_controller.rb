@@ -15,7 +15,7 @@ class MealsController < ApplicationController
     @meal.restaurant = @restaurant
     @meal.save
     if @meal.save
-      redirect_to restaurant_path(@restaurant)
+      redirect_to @restaurant
     else
       render :new
     end
@@ -26,7 +26,7 @@ class MealsController < ApplicationController
 
   def update
     if @meal.update(meal_params)
-      redirect_to restaurant_meals_path(@restaurant)
+      redirect_to @restaurant
     else
       render :edit
     end

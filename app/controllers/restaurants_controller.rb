@@ -13,15 +13,15 @@ class RestaurantsController < ApplicationController
   end
 
   def new
-    @restaurant = Restaurant.new
+    authorize Restaurant
 
-    authorize @restaurant
+    @restaurant = Restaurant.new
   end
 
   def create
-    @restaurant = Restaurant.new(restaurant_params)
+    authorize Restaurant
 
-    authorize @restaurant
+    @restaurant = Restaurant.new(restaurant_params)
 
     if @restaurant.save!
       redirect_to restaurant_path(@restaurant)

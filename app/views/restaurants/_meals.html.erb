@@ -10,8 +10,10 @@
     <div class="card-product-infos">
       <h2>
         <%= meal.name %>
-        <%= link_to edit_restaurant_meal_path(restaurant, meal), class: "text-dark" do %>
-          <small><i class="fas fa-pencil-alt"></i></small>
+        <% if policy(meal).edit? %>
+          <%= link_to edit_restaurant_meal_path(restaurant, meal), class: "text-dark" do %>
+            <small><i class="fas fa-pencil-alt"></i></small>
+          <% end %>
         <% end %>
       </h2>
       <p class="mt-0"><%= meal.description %></p>
