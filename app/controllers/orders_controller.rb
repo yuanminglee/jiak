@@ -33,7 +33,7 @@ class OrdersController < ApplicationController
     redirect_to restaurant_path(@order.restaurant), notice: "Your order is cancelled!"
   end
 
-  def confirmed
+  def confirm
     @order.update(status: 'Confirmed')
     redirect_to order_path(@order), notice: "Your order is confirmed!"
   end
