@@ -6,6 +6,9 @@ Rails.application.routes.draw do
 
   resources :restaurants do
     resources :meals
+    member do 
+      get 'orders'
+    end
   end
 
   resources :orders, except: :destroy do

@@ -1,5 +1,5 @@
 class RestaurantsController < ApplicationController
-  before_action :find_restaurant, only: [:show, :edit, :update, :destroy]
+  before_action :find_restaurant, only: [:show, :edit, :update, :destroy, :orders]
 
   def index
     @restaurants = Restaurant.order(:id)
@@ -31,6 +31,10 @@ class RestaurantsController < ApplicationController
   def destroy
     @restaurant.destroy
     redirect_to restaurants_path
+  end
+
+  def orders
+    @orders = Order.where(restaurant: @restaurant)
   end
 
   private

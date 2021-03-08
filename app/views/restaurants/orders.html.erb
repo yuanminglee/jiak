@@ -1,0 +1,13 @@
+<% @orders.each do |order| %>
+          <% order.line_items.each do |line_item| %>
+            <%= line_item.meal.name %>
+            <%= line_item.quantity %>
+          <% end %>
+          <%= order.total_price %>
+        <% end %>
+
+<% @orders.each do |order| %>
+  <% order.line_items.each do |line_item| %>
+    <p><%= line_item.meal.name %></p>
+  <% end %>
+<% end %>
