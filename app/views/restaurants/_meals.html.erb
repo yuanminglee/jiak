@@ -1,0 +1,23 @@
+<h2 class="mt-5 font-weight-bold">Meals</h2>
+<% restaurant.meals.each do |meal| %>
+  <div class="card-product mt-2">
+    <% if meal.photo.attached? %>
+      <%= cl_image_tag meal.photo.key %>
+    <% else %>
+      <%= image_tag 'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1650&q=80' %>
+    <% end %>
+
+    <div class="card-product-infos">
+      <h2>
+        <%= meal.name %>
+        <%= link_to edit_restaurant_meal_path(restaurant, meal), class: "text-dark" do %>
+          <small><i class="fas fa-pencil-alt"></i></small>
+        <% end %>
+      </h2>
+      <p class="mt-0"><%= meal.description %></p>
+      <p><small><%= meal.ingredients %></small></p>
+      <p class="mt-0"><small>Serves <%= meal.pax || 1 %> pax</small></p>
+      <h5 class="mt-3">$<%= meal.price %></h5>
+    </div>
+  </div>
+<% end %>
