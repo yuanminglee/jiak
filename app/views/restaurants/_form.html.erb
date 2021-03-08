@@ -5,5 +5,6 @@
   <%= f.input :description %>
   <%= f.input :opening_days %>
   <%= f.input :photo %>
+  <%= f.hidden_field :user_id, :value => current_user.id %>
   <%= f.submit %>
 <% end %>

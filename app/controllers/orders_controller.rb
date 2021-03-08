@@ -3,6 +3,7 @@ class OrdersController < ApplicationController
   after_action :update_price, only: %i[update]
 
   def show
+    authorize @order
     @grouped_line_items = @order.line_items.group_by(&:meal)
   end
 
@@ -11,6 +12,8 @@ class OrdersController < ApplicationController
     @order.user = current_user
     @order.status = 'Draft'
 
+    authorize @order
+
     @order.save!
     redirect_to edit_order_path(@order)
   end
@@ -18,22 +21,32 @@ class OrdersController < ApplicationController
   def edit
     @restaurant = @order.restaurant
     @meals = @restaurant.meals
+
+    authorize @order
   end
 
   def update
+    authorize @order
+
     @order.line_items.build(order_params[:line_item])
 
     if @order.save!
       redirect_to edit_order_path(@order), notice: "#{@order.line_items.last.quantity} x #{@order.line_items.last.meal.name} added!"
+    else
+      flash[:alert] = "Order not saved"
     end
   end
 
   def cancel
+    authorize @order
+
     @order.update(status: 'Cancelled')
     redirect_to restaurant_path(@order.restaurant), notice: "Your order is cancelled!"
   end
 
   def confirm
+    authorize @order
+
     @order.update(status: 'Confirmed')
     redirect_to order_path(@order), notice: "Your order is confirmed!"
   end
@@ -51,5 +64,4 @@ class OrdersController < ApplicationController
   def order_params
     params.require(:order).permit(:collection_date, :restaurant_id, :status, line_item: [:meal_id, :quantity])
   end
-
 end

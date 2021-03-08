@@ -34,6 +34,7 @@ gem 'simple_form'
 gem 'devise'
 gem 'cloudinary', '~> 1.16.0'
 gem 'money-rails', '~>1.12'
+gem 'pundit'
 
 group :development, :test do
   gem 'pry-byebug'
