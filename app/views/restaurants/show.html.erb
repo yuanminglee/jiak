@@ -20,7 +20,7 @@
 
       <div class="btn-group mt-3" role="group">
         <%= link_to 'Add meal', new_restaurant_meal_path(@restaurant), class: "btn btn-ghost" %>
-        <%= link_to 'View orders',"#", class: "btn btn-ghost" %>
+        <%= link_to 'View orders', orders_restaurant_path(@restaurant), class: "btn btn-ghost" %>
         <%= link_to 'Edit', edit_restaurant_path(@restaurant), class: "btn btn-ghost" %>
         <%= link_to "Remove",
           restaurant_path(@restaurant),
