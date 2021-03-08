@@ -34,7 +34,6 @@ class RestaurantsController < ApplicationController
   end
 
   def orders
-    @orders = Order.where(restaurant: @restaurant)
   end
 
   private
