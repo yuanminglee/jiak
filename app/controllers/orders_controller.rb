@@ -45,6 +45,8 @@ class OrdersController < ApplicationController
   end
 
   def confirm
+    authorize @order
+
     @order.update(status: 'Confirmed')
     redirect_to order_path(@order), notice: "Your order is confirmed!"
   end

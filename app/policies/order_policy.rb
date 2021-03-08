@@ -32,10 +32,6 @@ class OrderPolicy < ApplicationPolicy
   private
 
   def my_restaurant_or_my_order
-    if user.is_chef
-      record.restaurant.user == user
-    else
-      record.user == user
-    end
+    record.restaurant.user == user || record.user == user
   end
 end
