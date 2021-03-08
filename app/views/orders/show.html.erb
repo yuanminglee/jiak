@@ -33,7 +33,7 @@
         <td class="text-right font-weight-bold"><%= @order.total_price.format %></td>
       </tr>
       <tr class="pb-0">
-        <td colspan="3" class="p-0"><%= link_to "Checkout now", confirmed_order_path(@order), method: :patch, data: { confirm: "Confirm your order?" }, class: 'btn btn-dark w-100' if @order.status != "Cancelled" && @order.status != "Confirmed"  %></td>
+        <td colspan="3" class="p-0"><%= link_to "Checkout now", confirm_order_path(@order), method: :patch, data: { confirm: "Confirm your order?" }, class: 'btn btn-dark w-100' if @order.status != "Cancelled" && @order.status != "Confirmed"  %></td>
       </tr>
     </tbody>
   </table>

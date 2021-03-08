@@ -1,5 +1,5 @@
 class OrdersController < ApplicationController
-  before_action :find_order, only: %i[show edit update update_price cancel confirmed]
+  before_action :find_order, only: %i[show edit update update_price cancel confirm]
   after_action :update_price, only: %i[update]
 
   def show
