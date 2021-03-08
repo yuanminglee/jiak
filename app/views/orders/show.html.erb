@@ -5,6 +5,8 @@
         <th colspan="2">Your order #<%= @order.id %></th>
         <% if @order.status == "Cancelled" %>
           <th class="text-right">Cancelled</th>
+        <%  elsif @order.status == "Confirmed" %>
+          <th class="text-right">Confirmed</th>
         <% else %>
           <th class="text-right"><%= link_to "Edit order", edit_order_path(@order), class: "text-white" %></th>
         <% end %>
@@ -31,7 +33,7 @@
         <td class="text-right font-weight-bold"><%= @order.total_price.format %></td>
       </tr>
       <tr class="pb-0">
-        <td colspan="3" class="p-0"><%= link_to "Checkout now", "#" , class: 'btn btn-dark w-100' if @order.status != "Cancelled" %></td>
+        <td colspan="3" class="p-0"><%= link_to "Checkout now", confirm_order_path(@order), method: :patch, data: { confirm: "Confirm your order?" }, class: 'btn btn-dark w-100' if @order.status != "Cancelled" && @order.status != "Confirmed"  %></td>
       </tr>
     </tbody>
   </table>

@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   resources :orders, except: :destroy do
     member do
       patch 'cancel'
+      patch 'confirm'
     end
     resources :line_items, except: :destroy
   end
