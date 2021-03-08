@@ -1,5 +1,5 @@
 class OrdersController < ApplicationController
-  before_action :find_order, only: %i[show edit update update_price cancel]
+  before_action :find_order, only: %i[show edit update update_price cancel confirm]
   after_action :update_price, only: %i[update]
 
   def show
@@ -42,6 +42,11 @@ class OrdersController < ApplicationController
 
     @order.update(status: 'Cancelled')
     redirect_to restaurant_path(@order.restaurant), notice: "Your order is cancelled!"
+  end
+
+  def confirm
+    @order.update(status: 'Confirmed')
+    redirect_to order_path(@order), notice: "Your order is confirmed!"
   end
 
   private
