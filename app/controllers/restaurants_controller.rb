@@ -47,6 +47,7 @@ class RestaurantsController < ApplicationController
   end
 
   def orders
+    authorize @restaurant
   end
 
   private
