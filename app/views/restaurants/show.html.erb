@@ -5,9 +5,9 @@
     <%= image_tag "https://raw.githubusercontent.com/lewagon/fullstack-images/master/uikit/breakfast.jpg" %>
   <% end %>
   <div class="card-trip-infos">
-    <div>
-      <h2><%= @restaurant.name %></h2>
-      <p><%= @restaurant.description %></p>
+    <div class="w-75">
+      <h2 class="card-title"><%= @restaurant.name %></h2>
+      <p class="card-subtitle"><%= @restaurant.description %></p>
       <p class="mt-3">
         <strong>Collection address: </strong>
         <%= @restaurant.address %>
@@ -19,15 +19,17 @@
       </p>
 
       <div class="btn-group mt-3" role="group">
-        <%= link_to 'Add meal', new_restaurant_meal_path(@restaurant), class: "btn btn-ghost" %>
-        <%= link_to 'View orders', orders_restaurant_path(@restaurant), class: "btn btn-ghost" %>
-        <%= link_to 'Edit', edit_restaurant_path(@restaurant), class: "btn btn-ghost" %>
-        <%= link_to "Remove",
-          restaurant_path(@restaurant),
-          method: :delete,
-          data: { confirm: "Are you sure?"},
-          class: "btn btn-ghost"
-        %>
+        <% if policy(@restaurant).edit? %>
+          <%= link_to 'Add meal', new_restaurant_meal_path(@restaurant), class: "btn btn-ghost" %>
+          <%= link_to 'View orders', orders_restaurant_path(@restaurant), class: "btn btn-ghost" %>
+          <%= link_to 'Edit', edit_restaurant_path(@restaurant), class: "btn btn-ghost" %>
+          <%= link_to "Remove",
+            restaurant_path(@restaurant),
+            method: :delete,
+            data: { confirm: "Are you sure?"},
+            class: "btn btn-ghost"
+          %>
+        <% end %>
         <%= link_to "Back", restaurants_path, class: "btn btn-ghost" %>
       </div>
 

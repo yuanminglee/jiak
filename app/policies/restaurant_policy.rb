@@ -28,4 +28,8 @@ class RestaurantPolicy < ApplicationPolicy
   def destroy?
     user.is_chef && record.user == user
   end
+
+  def orders?
+    user.is_chef && record.user == user
+  end
 end

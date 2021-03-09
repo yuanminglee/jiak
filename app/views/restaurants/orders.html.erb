@@ -13,9 +13,11 @@
           Collection: <%= order.collection_date.strftime('%-d %b %Y') %>, <%= order.collection_date.strftime('%l:%M%p') %>
         </strong></td>
       </tr>
-      <% order.line_items.each do |line_item| %>
+      <% order.line_items.group_by(&:meal).each do |meal, line_items| %>
         <tr class="borderless-y">
-          <td><%= line_item.meal.name %> x <%= line_item.quantity %></td>
+          <td><%= meal.name %></td>
+          <td class="text-right">x <%= line_items.sum(&:quantity) %></td>
+          <td class="text-right"><%= (line_items.sum(&:quantity) * meal.price).format %></td>
         </tr>
       <% end %>
       <tr>
@@ -28,4 +30,4 @@
 <% end %>
 
 
-    
+
