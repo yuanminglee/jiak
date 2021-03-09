@@ -6,7 +6,7 @@ Rails.application.routes.draw do
 
   resources :restaurants do
     resources :meals
-    member do 
+    member do
       get 'orders'
     end
   end
@@ -14,10 +14,12 @@ Rails.application.routes.draw do
   resources :orders, except: :destroy do
     member do
       patch 'cancel'
-      patch 'confirm'
     end
     resources :line_items, except: :destroy
+    resources :payments, only: :new
   end
 
   resources :line_items, only: :destroy
+
+  mount StripeEvent::Engine, at: '/stripe-webhooks'
 end

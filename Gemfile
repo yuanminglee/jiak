@@ -27,6 +27,7 @@ gem 'jbuilder', '~> 2.7'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.4', require: false
+gem 'pry-rails'
 
 gem 'autoprefixer-rails'
 gem 'font-awesome-sass'
@@ -36,10 +37,11 @@ gem 'cloudinary', '~> 1.16.0'
 gem 'money-rails', '~>1.12'
 gem 'pundit'
 gem 'httparty'
+gem 'stripe'
+gem 'stripe_event'
 
 group :development, :test do
   gem 'pry-byebug'
-  gem 'pry-rails'
   gem 'dotenv-rails'
 
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

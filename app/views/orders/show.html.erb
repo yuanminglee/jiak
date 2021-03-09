@@ -3,12 +3,10 @@
     <thead class="thead-dark">
       <tr>
         <th colspan="2">Your order #<%= @order.id %></th>
-        <% if @order.status == "Cancelled" %>
-          <th class="text-right">Cancelled</th>
-        <%  elsif @order.status == "Confirmed" %>
-          <th class="text-right">Confirmed</th>
+        <% if @order.status == "Draft" %>
+          <th class="text-right"><%= link_to "[Draft] Edit order", edit_order_path(@order), class: "text-white" %></th>
         <% else %>
-          <th class="text-right"><%= link_to "Edit order", edit_order_path(@order), class: "text-white" %></th>
+          <th class="text-right"><%= @order.status  %></th>
         <% end %>
       </tr>
     </thead>
@@ -21,20 +19,33 @@
           <%= @order.collection_date.strftime('%-d %b %Y') %>, <%= @order.restaurant.collection_time.strftime('%l:%M%p') %>
         </strong></td>
       </tr>
-      <% @grouped_line_items.each do |meal, line_items| %>
+      <% @grouped_line_items.each do |line_item| %>
         <tr class="borderless-y">
-          <td><%= meal.name %></td>
-          <td class="text-right">x<%= line_items.sum(&:quantity) %></td>
-          <td class="text-right"><%= (line_items.sum(&:quantity) * meal.price).format %></td>
+          <td><%= line_item[:name] %></td>
+          <td class="text-right">x<%= line_item[:quantity] %></td>
+          <td class="text-right"><%= Money.new(line_item[:quantity] * line_item[:amount]).format %></td>
         </tr>
       <% end %>
       <tr>
         <td colspan="2" class="font-weight-bold">Total</td>
         <td class="text-right font-weight-bold"><%= @order.total_price.format %></td>
       </tr>
-      <tr class="pb-0">
-        <td colspan="3" class="p-0"><%= link_to "Checkout now", confirm_order_path(@order), method: :patch, data: { confirm: "Confirm your order?" }, class: 'btn btn-dark w-100' if @order.status != "Cancelled" && @order.status != "Confirmed"  %></td>
-      </tr>
+      <% if @order.status == 'Draft' %>
+        <tr class="pb-0">
+          <td colspan="3" class="p-0"><button id="pay" class="btn btn-dark w-100">Pay</button></td>
+        </tr>
+      <% end %>
     </tbody>
   </table>
 </div>
+
+<script src="https://js.stripe.com/v3/"></script>
+<script>
+  const paymentButton = document.getElementById('pay');
+  paymentButton.addEventListener('click', () => {
+    const stripe = Stripe('<%= ENV['STRIPE_PUBLISHABLE_KEY'] %>');
+    stripe.redirectToCheckout({
+      sessionId: '<%= @order.checkout_session_id %>'
+    });
+  });
+</script>
