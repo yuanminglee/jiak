@@ -15,4 +15,14 @@ class Order < ApplicationRecord
   def update_total_price
     update(total_price: Money.new(calculate_total_price))
   end
+
+  def grouped_line_items
+    line_items.group_by(&:meal).map do |meal, line_items|
+      {
+        name: meal.name,
+        quantity: line_items.sum(&:quantity),
+        line_amount: meal.price_cents * line_items.sum(&:quantity)
+      }
+    end
+  end
 end

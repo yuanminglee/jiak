@@ -4,7 +4,26 @@ class OrdersController < ApplicationController
 
   def show
     authorize @order
-    @grouped_line_items = @order.line_items.group_by(&:meal)
+
+    @grouped_line_items = @order.line_items.group_by(&:meal).map do |meal, line_items|
+      {
+        name: meal.name,
+        images: [meal.photo.url],
+        amount: meal.price_cents,
+        currency: 'sgd',
+        quantity: line_items.sum(&:quantity)
+      }
+    end
+
+    session = Stripe::Checkout::Session.create(
+      payment_method_types: ['card'],
+      line_items: @grouped_line_items,
+      success_url: order_url(@order),
+      cancel_url: order_url(@order)
+    )
+
+    @order.update(checkout_session_id: session.id)
+    flash[:notice] = "Thanks for your payment. Your order is confirmed!"
   end
 
   def create
@@ -42,13 +61,6 @@ class OrdersController < ApplicationController
 
     @order.update(status: 'Cancelled')
     redirect_to restaurant_path(@order.restaurant), notice: "Your order is cancelled!"
-  end
-
-  def confirm
-    authorize @order
-
-    @order.update(status: 'Confirmed')
-    redirect_to order_path(@order), notice: "Your order is confirmed!"
   end
 
   private
