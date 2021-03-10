@@ -1,4 +1,4 @@
-<div class="card-trip">
+<!-- <div class="card-trip">
   <img src="https://raw.githubusercontent.com/lewagon/fullstack-images/master/uikit/greece.jpg" />
   <div class="card-trip-infos">
     <div>
@@ -10,3 +10,96 @@
     <%= cl_image_tag current_user.photo.key, class: "card-trip-user avatar-bordered" %>
   </div>
 </div>
+ -->
+
+<div class="container">
+  <div class="row profile">
+    <div class="col-md-3">
+      <div class="profile-sidebar">
+        <!-- SIDEBAR USERPIC -->
+        <div class="profile-userpic d-flex justify-content-center">
+          <%= cl_image_tag current_user.photo.key, class: "img-fluid img-thumbnail" %>
+        </div>
+        <!-- END SIDEBAR USERPIC -->
+        <!-- SIDEBAR USER TITLE -->
+        <div class="profile-usertitle">
+          <div class="profile-usertitle-name">
+            <%= current_user.name %> [<%= current_user.is_chef ? "Chef" : "Customer" %>]
+          </div>
+          <div class="profile-usertitle-job">
+            <small><%= current_user.description %></small>
+          </div>
+        </div>
+        <!-- END SIDEBAR USER TITLE -->
+        <!-- SIDEBAR BUTTONS -->
+        <div class="profile-userbuttons">
+          <button type="button" class="btn btn-success btn-sm">Follow</button>
+          <button type="button" class="btn btn-danger btn-sm">Message</button>
+        </div>
+        <!-- END SIDEBAR BUTTONS -->
+        <!-- SIDEBAR MENU -->
+        <div class="profile-usermenu">
+          <ul>
+            <li class="active">
+              <a href="#">
+              <i class="fas fa-home"></i>
+              Overview </a>
+            </li>
+            <li>
+              <a href="#">
+              <i class="fas fa-user"></i>
+              Account Settings </a>
+            </li>
+            <li>
+              <a href="#" target="_blank">
+              <i class="fas fa-check"></i>
+              Tasks </a>
+            </li>
+            <li>
+              <a href="#">
+              <i class="fas fa-flag"></i>
+              Help </a>
+            </li>
+          </ul>
+        </div>
+        <!-- END MENU -->
+      </div>
+    </div>
+    <div class="col-md-9">
+      <div class="profile-content">
+        <h2>My orders</h2>
+        <% current_user.orders.each do |order| %>
+        <div class="card w-100 mx-auto my-3">
+          <table class="table mb-0">
+            <thead class="<%= order.status == 'Paid' ? 'bg-success border border-success text-light' : 'thead-dark' %>">
+              <tr>
+                <th colspan="2">Order #<%= order.id %></th>
+                <th class="text-right"><%= order.status %></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr  class="border-bottom">
+                <td colspan="2"><strong>
+                  Collection: <%= order.collection_date.strftime('%-d %b %Y') %>, <%= order.collection_date.strftime('%l:%M%p') %>
+                </strong></td>
+                <td colspan="1" class="text-right"><%= order.user.name %> (<%= order.user.mobile_number %>)</td>
+              </tr>
+              <% order.line_items.group_by(&:meal).each do |meal, line_items| %>
+                <tr class="borderless-y">
+                  <td><%= meal.name %></td>
+                  <td class="text-right">x <%= line_items.sum(&:quantity) %></td>
+                  <td class="text-right"><%= (line_items.sum(&:quantity) * meal.price).format %></td>
+                </tr>
+              <% end %>
+              <tr>
+                <td colspan="2" class="font-weight-bold">Total</td>
+                <td class="text-right font-weight-bold"><%= order.total_price.format %></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+ </div>

@@ -48,6 +48,7 @@ class RestaurantsController < ApplicationController
 
   def orders
     authorize @restaurant
+    @orders = @restaurant.orders.order(:collection_date)
   end
 
   private
