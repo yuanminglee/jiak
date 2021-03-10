@@ -1,7 +1,6 @@
 class MealsController < ApplicationController
   before_action :find_meal, only: %i[edit update]
   before_action :find_restaurant, only: %i[new create edit update]
-  before_action :authorize_meal, except: :new
 
   def new
     @meal = Meal.new
@@ -13,6 +12,8 @@ class MealsController < ApplicationController
   def create
     @meal = Meal.new(meal_params)
     @meal.restaurant = @restaurant
+    authorize @meal
+
     @meal.save
     if @meal.save
       redirect_to @restaurant
@@ -22,9 +23,12 @@ class MealsController < ApplicationController
   end
 
   def edit
+    authorize @meal
   end
 
   def update
+    authorize @meal
+
     if @meal.update(meal_params)
       redirect_to @restaurant
     else
@@ -33,10 +37,6 @@ class MealsController < ApplicationController
   end
 
   private
-
-  def authorize_meal
-    authorize @meal
-  end
 
   def meal_params
     params.require(:meal).permit(:name, :description, :ingredients, :price, :pax, :photo)
