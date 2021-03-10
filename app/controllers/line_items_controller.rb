@@ -7,11 +7,11 @@ class LineItemsController < ApplicationController
   end
 
   def destroy
-    @order = @line_item.order
+    authorize @line_item
 
-    if @line_item.destroy
-      redirect_to edit_order_path(@order), notice: "Item removed!"
-    end
+    @order = @line_item.order
+    @line_item.destroy
+    redirect_to edit_order_path(@order), notice: "Item removed!"
   end
 
   private
@@ -19,7 +19,7 @@ class LineItemsController < ApplicationController
   def find_line_item
     @line_item = LineItem.find(params[:id])
   end
-  
+
   def update_price
     @order = @line_item.order
     @order.update_total_price
