@@ -9,8 +9,21 @@
   </div>
 </div> -->
 
-<div class="banner home_video">
+<!-- <div class="banner home_video">
   <%= video_tag "cooking.mp4", autoplay: :autoplay, loop: :loop, muted: :muted, class: "home_video" %>
+  <div class="align-items-center">
+    <h1 class="home">JIAK</h1>
+    <p class="home">A taste of home</p>
+    <div class="text-center">
+      <%= link_to "Log in", new_user_session_path, class: "btn btn-ghost" %>
+      <%= link_to "Sign up", new_user_registration_path, class: "btn btn-ghost" %>
+    </div>
+  </div>
+</div> -->
+
+
+<div class="banner home_video">
+  <%= image_tag "https://res.cloudinary.com/yuanming91/image/upload/v1615380334/pexels-cottonbro-3992206_v2lkec.jpg", class: "home_video" %>
   <div class="align-items-center">
     <h1 class="home">JIAK</h1>
     <p class="home">A taste of home</p>
