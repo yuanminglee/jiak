@@ -39,6 +39,7 @@ gem 'pundit'
 gem 'httparty'
 gem 'stripe'
 gem 'stripe_event'
+gem 'rqrcode'
 
 group :development, :test do
   gem 'pry-byebug'

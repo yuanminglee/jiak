@@ -14,10 +14,14 @@ Rails.application.routes.draw do
   resources :orders, except: :destroy do
     member do
       patch 'cancel'
+      get 'success'
+      
     end
     resources :line_items, except: :destroy
     resources :payments, only: :new
   end
+
+  
 
   resources :line_items, only: :destroy
 

@@ -1,9 +1,38 @@
+require 'rqrcode'
 class OrdersController < ApplicationController
-  before_action :find_order, only: %i[show edit update update_price cancel confirm]
+  before_action :find_order, only: %i[show edit update update_price cancel confirm success]
   after_action :update_price, only: %i[update]
 
   def show
     authorize @order
+
+    @grouped_line_items = @order.line_items.group_by(&:meal).map do |meal, line_items|
+      {
+        name: meal.name,
+        images: [meal.photo.url],
+        amount: meal.price_cents,
+        currency: 'sgd',  
+        quantity: line_items.sum(&:quantity)
+      }
+    end
+
+    session = Stripe::Checkout::Session.create(
+      payment_method_types: ['card'],
+      line_items: @grouped_line_items,
+      success_url:   success_order_url(@order),
+      cancel_url: order_url(@order)
+      
+    )
+
+    @order.update(checkout_session_id: session.id)
+    flash[:notice] = "Thanks for your payment. Your order is confirmed!"
+  end
+
+  def success
+    authorize @order
+    session = Stripe::Checkout::Session.retrieve(@order.checkout_session_id)
+    @customer = Stripe::Customer.retrieve(session.customer)
+    
 
     @grouped_line_items = @order.line_items.group_by(&:meal).map do |meal, line_items|
       {
@@ -15,16 +44,16 @@ class OrdersController < ApplicationController
       }
     end
 
-    session = Stripe::Checkout::Session.create(
-      payment_method_types: ['card'],
-      line_items: @grouped_line_items,
-      success_url: order_url(@order),
-      cancel_url: order_url(@order)
+    qrcode = RQRCode::QRCode.new(success_order_path(@order))
+    @svg = qrcode.as_svg(
+      offset: 0,
+      color: '000',
+      shape_rendering: 'crispEdges',
+      module_size: 6,
+      standalone: true
     )
-
-    @order.update(checkout_session_id: session.id)
-    flash[:notice] = "Thanks for your payment. Your order is confirmed!"
   end
+
 
   def create
     @order = Order.new(order_params)
