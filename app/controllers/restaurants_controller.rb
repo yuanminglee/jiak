@@ -2,7 +2,12 @@ class RestaurantsController < ApplicationController
   before_action :find_restaurant, only: %i[show edit update destroy orders]
 
   def index
-    @restaurants = policy_scope(Restaurant).order(:id)
+    if params[:search].present?
+      @restaurants = policy_scope(Restaurant.global_search(params[:search])).order(:id)
+      @search_placeholder = "Displaying #{@restaurants.count} results for #{params[:search]}"
+    else
+      @restaurants = policy_scope(Restaurant).order(:id)
+    end
   end
 
   def show
