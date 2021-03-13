@@ -13,9 +13,9 @@ def generate_ingredients(num_ingredients)
   ingredients.map(&:downcase).join(", ")
 end
 
-def random_date_by_dow(start_date, end_date, dow_string)
-  dows = dow_string.split(",").map(&:to_i)
-  filtered_dates = (start_date..end_date).select { |date| dows.include? date.wday }
+def random_date_by_dow(start_date, end_date, dows)
+  dow_nums = dows.map { |dow| Date::DAYNAMES.index(dow) }
+  filtered_dates = (start_date..end_date).select { |date| dow_nums.include? date.wday }
   filtered_dates.sample
 end
 
