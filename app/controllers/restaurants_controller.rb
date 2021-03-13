@@ -2,7 +2,19 @@ class RestaurantsController < ApplicationController
   before_action :find_restaurant, only: %i[show edit update destroy orders]
 
   def index
-    @restaurants = policy_scope(Restaurant).order(:id)
+    if params[:search].present?
+      filters = params[:search][:filters].reject(&:empty?)
+      query = params[:search][:query]
+
+      @restaurants = policy_scope(Restaurant)
+      @restaurants = @restaurants.global_search(query) if query.present?
+      @restaurants = @restaurants.select { |restaurant| (filters - restaurant.opening_days).empty? } if filters.present?
+
+      prefix = ' for ' if query.present?
+      @search_placeholder = "Displaying #{@restaurants.count} #{'result'.pluralize(@restaurants.count)}#{prefix}#{query if query.present?}"
+    else
+      @restaurants = policy_scope(Restaurant).order(:id)
+    end
   end
 
   def show
