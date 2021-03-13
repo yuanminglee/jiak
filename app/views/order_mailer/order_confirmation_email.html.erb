@@ -1,15 +1,15 @@
-<p>We got your order !</p>
+<p>We got your order!</p>
     <p>
-    Order details<br>
+    Order Number # <%= @order.id %><br>
     --------------------------
     </p>
     <p>Name: <%= @order.user.name %></p>
-    <p>Email: <%= @order.user.email %>!</p>
-    <p><%= @order.id %></p>
-    
-    
-    <p>
-    Message:<br>
-    ----------
+    <p>Meal:</p>
+    <ul>
+      <% @order.line_items.each do |line_item| %>
+        <li><%= line_item.meal.name %> x <%= line_item.quantity %></li>
+      <% end %>
+    </ul>
+    <p>Total: <%= @order.total_price.format %> </p>
     </p>
-    
+    <%= @qr_code.html_safe %>

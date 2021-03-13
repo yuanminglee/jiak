@@ -1,6 +1,7 @@
 class OrderMailer < ApplicationMailer
   def order_confirmation_email
     @order = params[:order]
-    mail(to: 'primaulia@gmail.com', subject: "Your order is confirmed!")
+    @qr_code = params[:code]
+    mail(to: 'juzjaelyn@gmail.com', subject: "Your order is confirmed!")
   end
 end

@@ -23,15 +23,33 @@ class OrdersController < ApplicationController
       cancel_url: order_url(@order)
     )
 
-    if @order.update(checkout_session_id: session.id)
-      OrderMailer.with(order: @order).order_confirmation_email.deliver_now
-      flash[:notice] = "Thanks for your payment. Your order is confirmed!"
-    end
+    @order.update(checkout_session_id: session.id)
+    flash[:notice] = "Thanks for your payment. Your order is confirmed!"
+    
     
   end
 
   def success
     authorize @order
+
+    qrcode = RQRCode::QRCode.new(success_order_path(@order))
+    @svg = qrcode.as_svg(
+      offset: 0,
+      color: '000',
+      shape_rendering: 'crispEdges',
+      module_size: 6,
+      standalone: true
+    )
+    
+
+    OrderMailer.with(order: @order, code: @svg).order_confirmation_email.deliver_now
+    raise
+
+    unless @order.confirmation_email_sent_at.present?
+      OrderMailer.with(order: @order, code: @svg).order_confirmation_email.deliver_now
+      @order.update(confirmation_email_sent_at: DateTime.now)
+    end
+
     session = Stripe::Checkout::Session.retrieve(@order.checkout_session_id)
     @customer = Stripe::Customer.retrieve(session.customer)
 
@@ -45,14 +63,9 @@ class OrdersController < ApplicationController
       }
     end
 
-    qrcode = RQRCode::QRCode.new(success_order_path(@order))
-    @svg = qrcode.as_svg(
-      offset: 0,
-      color: '000',
-      shape_rendering: 'crispEdges',
-      module_size: 6,
-      standalone: true
-    )
+    
+
+    
   end
 
   def create
@@ -80,7 +93,7 @@ class OrdersController < ApplicationController
 
     if @order.save!
       redirect_to edit_order_path(@order),
-                  notice: "#{@order.line_items.last.quantity} x #{@order.line_items.last.meal.name} added!"
+      notice: "#{@order.line_items.last.quantity} x #{@order.line_items.last.meal.name} added!"
     else
       flash[:alert] = "Order not saved"
     end
