@@ -83,7 +83,7 @@ addresses.each do |address|
     description: Faker::Restaurant.description,
     address: address,
     collection_time: Time.new(2021,1,1,rand(0..11),0,0),
-    opening_days: ("1".."7").to_a.sample(3).sort.join(","),
+    opening_days: Date::DAYNAMES.sample(3),
     user: User.where(is_chef: true).sample
   )
   puts "Restaurant created: #{restaurant.name}. Attaching photo..."
