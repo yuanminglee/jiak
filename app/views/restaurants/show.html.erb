@@ -18,6 +18,13 @@
         <%= @restaurant.collection_time.strftime('%l:%M%p') %>
       </p>
 
+      <p>
+        <strong>Opening days: </strong>
+        <% @restaurant.opening_days.each do |day| %>
+          <span class="badge badge-dark w-10"><%= day %></span>
+        <% end %>
+      </p>
+
       <div class="btn-group mt-3" role="group">
         <% if policy(@restaurant).edit? %>
           <%= link_to 'Add meal', new_restaurant_meal_path(@restaurant), class: "btn btn-ghost" %>
@@ -36,7 +43,7 @@
       <div class="container mt-3 pl-1">
         <h2>Select date to order</h2>
         <%= simple_form_for @order do |f| %>
-          <%= f.input :collection_date, label: false %>
+          <%= f.input :collection_date, label: false, as: :date, html5: true %>
           <%= f.hidden_field :restaurant_id, :value => @order.restaurant.id %>
           <%= f.button :submit, "Start ordering", :class => "btn btn-flat w-100" %>
         <% end %>
