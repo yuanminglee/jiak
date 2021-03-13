@@ -1,8 +1,19 @@
 <%= simple_form_for :search, url: restaurants_path, method: :get do |f| %>
+  <div class="form-group">
+    <%= f.input :filters,
+                  collection: Date::DAYNAMES,
+                  as: :check_boxes,
+                  checked: params.dig(:search, :filters),
+                  input_html: {
+                    class: "tag-selector"
+                  },
+                  item_wrapper_class: 'tag-item',
+                  label: "Opening days:" %>
+  </div>
   <div class="search-form-control form-group">
-    <input class="form-control string required" type="text" name="search" id="search" placeholder="<%= @search_placeholder %>" />
+    <input class="form-control string required" type="text" name="search[query]" id="search[query]" placeholder="<%= @search_placeholder %>" />
     <button name="commit" type="submit" class="btn btn-flat">
-      <i class="fas fa-search"></i> Search
+      <i class="fas fa-search"></i> Search restaurant or meal
     </button>
   </div>
 <% end %>

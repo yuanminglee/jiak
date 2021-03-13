@@ -24,3 +24,14 @@
   background-color: #7E73FF;
   color: white;
 }
+
+legend.col-form-label {
+  display: contents;
+  font-size: 16px;
+  opacity: .7;
+  margin: 0;
+
+  abbr {
+    display: none;
+  }
+}
