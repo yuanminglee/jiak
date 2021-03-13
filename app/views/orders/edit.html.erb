@@ -18,6 +18,13 @@
         <%= @restaurant.collection_time.strftime('%l:%M%p') %>
       </p>
 
+      <p>
+        <strong>Opening days: </strong>
+        <% @restaurant.opening_days.each do |day| %>
+          <span class="badge badge-dark w-10"><%= day %></span>
+        <% end %>
+      </p>
+
     </div>
     <div class="card-avatar">
       <% if @restaurant.photo.attached? %>
@@ -33,7 +40,7 @@
 <div class="card-trip mt-3">
   <div class="card-trip-infos">
     <div>
-      <h3 class="badge badge-dark"><%= @order.status %></h3>
+      <h3 class="badge badge-dark badge-right"><%= @order.status %></h3>
       <h2>Current order</h2>
       <ul class="pl-0 mt-2">
         <% @order.line_items.each do |line_item| %>

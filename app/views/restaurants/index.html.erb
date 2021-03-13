@@ -11,7 +11,10 @@
       <div class="card-product-infos">
         <h2><%= link_to restaurant.name, restaurant_path(restaurant), class: "text-dark" %></h2>
         <p><%= restaurant.description.truncate(650) %></p>
-        <p><%= restaurant.opening_days %></p>
+        <% restaurant.opening_days.each do |day| %>
+          <span class="badge badge-dark w-10"><%= day %></span>
+        <% end %>
+        </ul>
       </div>
     </div>
   <% end %>

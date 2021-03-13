@@ -23,3 +23,15 @@ $border-radius-lg: 4px;
 $border-radius-sm: 4px;
 
 // Override other variables below!
+$sizes: () !default;
+$sizes: map-merge(
+  (
+    10: 10%,
+    25: 25%,
+    50: 50%,
+    75: 75%,
+    100: 100%,
+    auto: auto
+  ),
+  $sizes
+);

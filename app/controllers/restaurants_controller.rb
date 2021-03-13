@@ -54,7 +54,11 @@ class RestaurantsController < ApplicationController
   private
 
   def restaurant_params
-    params.require(:restaurant).permit(:name, :description, :address, :collection_time, :opening_days, :photo, :user_id)
+    params[:restaurant][:opening_days].reject!(&:empty?)
+
+    params.require(:restaurant).permit(
+      :name, :description, :address, :collection_time, :photo, :user_id, opening_days: []
+    )
   end
 
   def find_restaurant
