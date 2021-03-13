@@ -40,6 +40,7 @@ gem 'httparty'
 gem 'stripe'
 gem 'stripe_event'
 gem 'rqrcode'
+gem 'letter_opener', group: :development
 
 group :development, :test do
   gem 'pry-byebug'

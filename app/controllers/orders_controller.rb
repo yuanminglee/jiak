@@ -11,7 +11,7 @@ class OrdersController < ApplicationController
         name: meal.name,
         images: [meal.photo.url],
         amount: meal.price_cents,
-        currency: 'sgd',  
+        currency: 'sgd',
         quantity: line_items.sum(&:quantity)
       }
     end
@@ -19,20 +19,21 @@ class OrdersController < ApplicationController
     session = Stripe::Checkout::Session.create(
       payment_method_types: ['card'],
       line_items: @grouped_line_items,
-      success_url:   success_order_url(@order),
+      success_url: success_order_url(@order),
       cancel_url: order_url(@order)
-      
     )
 
-    @order.update(checkout_session_id: session.id)
-    flash[:notice] = "Thanks for your payment. Your order is confirmed!"
+    if @order.update(checkout_session_id: session.id)
+      OrderMailer.with(order: @order).order_confirmation_email.deliver_now
+      flash[:notice] = "Thanks for your payment. Your order is confirmed!"
+    end
+    
   end
 
   def success
     authorize @order
     session = Stripe::Checkout::Session.retrieve(@order.checkout_session_id)
     @customer = Stripe::Customer.retrieve(session.customer)
-    
 
     @grouped_line_items = @order.line_items.group_by(&:meal).map do |meal, line_items|
       {
@@ -53,7 +54,6 @@ class OrdersController < ApplicationController
       standalone: true
     )
   end
-
 
   def create
     @order = Order.new(order_params)
@@ -79,7 +79,8 @@ class OrdersController < ApplicationController
     @order.line_items.build(order_params[:line_item])
 
     if @order.save!
-      redirect_to edit_order_path(@order), notice: "#{@order.line_items.last.quantity} x #{@order.line_items.last.meal.name} added!"
+      redirect_to edit_order_path(@order),
+                  notice: "#{@order.line_items.last.quantity} x #{@order.line_items.last.meal.name} added!"
     else
       flash[:alert] = "Order not saved"
     end
@@ -103,6 +104,6 @@ class OrdersController < ApplicationController
   end
 
   def order_params
-    params.require(:order).permit(:collection_date, :restaurant_id, :status, line_item: [:meal_id, :quantity])
+    params.require(:order).permit(:collection_date, :restaurant_id, :status, line_item: %i[meal_id quantity])
   end
 end
