@@ -9,7 +9,7 @@
       <% end %>
 
       <div class="card-product-infos">
-        <h2><%= link_to restaurant.name, restaurant_path(restaurant), class: "text-dark" %></h2>
+        <h2><%= link_to restaurant.name.upcase, restaurant_path(restaurant), class: "fw-bold" %></h2>
         <p><%= restaurant.description.truncate(650) %></p>
         <p><%= restaurant.opening_days %></p>
       </div>

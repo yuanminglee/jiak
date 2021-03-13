@@ -2,11 +2,16 @@
   <% if @restaurant.photo.attached? %>
     <%= cl_image_tag @restaurant.photo.key %>
   <% else %>
-    <%= image_tag "https://raw.githubusercontent.com/lewagon/fullstack-images/master/uikit/breakfast.jpg" %>
-  <% end %>
+    <%= image_tag ('https://raw.githubusercontent.com/lewagon/fullstack-images/master/uikit/breakfast.jpg') %>
+  <% end %> 
+
+  <div class="card-trip-title">
+    <%= "My restaurant" if current_user == @restaurant.user %>
+  </div>
+
   <div class="card-trip-infos">
     <div class="w-75">
-      <h2 class="card-title"><%= @restaurant.name %></h2>
+      <h2 class="card-title"><%= @restaurant.name.upcase %></h2>
       <p class="card-subtitle"><%= @restaurant.description %></p>
       <p class="mt-3">
         <strong>Collection address: </strong>
@@ -49,7 +54,7 @@
       <% else %>
         <%= image_tag "https://kitt.lewagon.com/placeholder/users/krokrob", class: "card-trip-user avatar-bordered" %>
       <% end %>
-      <h3 class="mt-2"><%= @restaurant.user.name %></h2>
+      <h3 class="mt-2"><%= @restaurant.user.name %></h3>
     </div>
   </div>
 </div>
