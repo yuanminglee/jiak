@@ -1,12 +1,82 @@
-<div class="banner home_video">
-  <%= video_tag "https://res.cloudinary.com/yuanming91/video/upload/v1615381302/cooking_jzkzxx.mp4", autoplay: :autoplay, loop: :loop, muted: :muted, class: "home_video" %>
-  <div class="align-items-center">
-    <h1 class="home">JIAK</h1>
-    <p class="home">A taste of home</p>
-    <div class="text-center">
-      <%= link_to "Log in", new_user_session_path, class: "btn btn-ghost" %>
-      <%= link_to "Sign up", new_user_registration_path, class: "btn btn-ghost" %>
+  <div class="banner home_video">
+    <%= video_tag "https://res.cloudinary.com/yuanming91/video/upload/v1615381302/cooking_jzkzxx.mp4", autoplay: :autoplay, loop: :loop, muted: :muted, class: "home_video" %>
+    <div class="align-items-center">
+      <h1 class="home">JIAK</h1>
+      <p class="home">A taste of home</p>
+      <div class="text-center">
+        <%= link_to "Log in", new_user_session_path, class: "btn btn-ghost" %>
+        <%= link_to "Sign up", new_user_registration_path, class: "btn btn-ghost" %>
+      </div>
+
+      <br>
+
+      <div class="container">
+        <i><p>Your entry to gastronomy heaven</p></i>
+      </div>
+    </div>
+  </div>
+
+
+
+<div class="container">
+  <div class="cards">
+    <div class="home-page-card-category" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url(https://source.unsplash.com/1600x900/?food">
+      <p style="font-family:Helvetica">Fill your stomach in 20 mins</p>
+    </div>
+
+    <div class="home-page-card-category" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url(https://source.unsplash.com/1600x900/?drinks")>
+      <p style="font-family:Helvetica">Get customers for your food</p>
+    </div>
+
+    <div class="home-page-card-category" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url(https://source.unsplash.com/1600x900/?fruits")>
+      <p style="font-family:Helvetica">Sign up with ONE step</p>
     </div>
   </div>
 </div>
 
+
+
+<div class="container">
+  <div class="row">
+    <div class="col-sm">
+      <h1>Customers</h1>
+      <p>You want to try new types of cuisine and you're bored of what you've been eating. Jiak has a wide ranging menu for you to satisfy your cravings</p>
+    </div>
+    <div class="col-sm">
+      <h1>Chefs</h1>
+      <p>You're a budding or established chef and want to get more customers to try your delicious food. Jiak has the right platform for you to reach out to many customers.</p>
+    </div>
+</div>
+
+
+
+
+<div class="footer-dark">
+        <footer>
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-6 col-md-3 item">
+                        <h3>Services</h3>
+                        <ul>
+                            <li><a href="#">Food delivery</a></li>
+                            <li><a href="#">Catering</a></li>
+                            <li><a href="#">Events and hosting</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-sm-6 col-md-3 item">
+                        <h3>About</h3>
+                        <ul>
+                            <li><a href="#">Company</a></li>
+                            <li><a href="#">Team</a></li>
+                            <li><a href="#">Careers</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6 item text">
+                        <h3>Jiak</h3>
+                        <p>Fulfilling all your food and drink needs</p>
+                    </div>
+                    <div class="col item social"><a href="#"><i class="icon ion-social-facebook"></i></a><a href="#"><i class="icon ion-social-twitter"></i></a><a href="#"><i class="icon ion-social-snapchat"></i></a><a href="#"><i class="icon ion-social-instagram"></i></a></div>
+                </div>
+                <p class="copyright">Jiak © 2021</p>
+            </div>
+        </footer>
