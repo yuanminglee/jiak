@@ -3,7 +3,11 @@
   <%= f.input :address %>
   <%= f.input :collection_time %>
   <%= f.input :description %>
-  <%= f.input :opening_days %>
+  <%= f.input :opening_days,
+              collection: Date::DAYNAMES,
+              as: :check_boxes,
+              input_html: { class: "tag-selector" },
+              item_wrapper_class: 'tag-item' %>
   <%= f.input :photo %>
   <%= f.hidden_field :user_id, :value => current_user.id %>
   <%= f.submit %>

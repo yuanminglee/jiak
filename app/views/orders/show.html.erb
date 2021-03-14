@@ -6,7 +6,7 @@
         <% if @order.status == "Draft" %>
           <th class="text-right"><%= link_to "[Draft] Edit order", edit_order_path(@order), class: "text-white" %></th>
         <% else %>
-          <th class="text-right"><%= @order.status  %></th>
+          <th class="text-right"><%= @order.status %></th>
         <% end %>
       </tr>
     </thead>
