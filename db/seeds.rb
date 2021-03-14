@@ -23,7 +23,7 @@ def attach_random_photo(record, search_term)
   return if record.photo.attached?
 
   search_term = "random" unless search_term.ascii_only?
-  file = URI.open("https://source.unsplash.com/featured/?#{search_term}")
+  file = URI.open("https://source.unsplash.com/featured/800x600?#{search_term}")
   record.photo.attach(io: file, filename: "#{search_term}.jpg", content_type: 'image/jpg')
 end
 
