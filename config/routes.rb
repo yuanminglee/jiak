@@ -21,5 +21,7 @@ Rails.application.routes.draw do
 
   resources :line_items, only: :destroy
 
+  resources :notifications
+
   mount StripeEvent::Engine, at: '/stripe-webhooks'
 end

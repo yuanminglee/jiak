@@ -31,3 +31,6 @@
 
 en:
   hello: "Hello world"
+  notifications:
+    order_notification:
+      message: "You have a new order"
