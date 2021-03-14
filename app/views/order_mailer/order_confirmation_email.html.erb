@@ -16,9 +16,4 @@ Dear <%= @order.user.name %>,
     </ul>
     <p>Total: <%= @order.total_price.format %> </p>
     </p>
-    <p>code :<%= @code %></p>
-    
-    
-    
-    
-    <img src="https://chart.googleapis.com/chart?cht=qr&chl=<%= @order.user.name %>&chs=500x500&chld=L%7C4" alt="QR code">
+    <img src="https://chart.googleapis.com/chart?cht=qr&chl=<%=  @qrcode %>&chs=500x500&chld=L%7C4" alt="QR code">

@@ -19,7 +19,7 @@ class OrdersController < ApplicationController
     session = Stripe::Checkout::Session.create(
       payment_method_types: ['card'],
       line_items: @grouped_line_items,
-      success_url:  collect_order_order_url(@order),
+      success_url:  success_order_url(@order),
       cancel_url: order_url(@order)
     )
 
@@ -31,22 +31,11 @@ class OrdersController < ApplicationController
     authorize @order
 
     @order.update(status: "Confirmed")
-
-    qrcode = RQRCode::QRCode.new(success_order_path(@order))
-    # @svg = qrcode.as_svg(
-    #   offset: 0,
-    #   color: '000',
-    #   shape_rendering: 'crispEdges',
-    #   module_size: 6,
-    #   standalone: true
-    # )
-
-    @svg = GoogleQR.new(data: "www.google.com", size: "500x500", margin: 4, error_correction: "L")
-
-    OrderMailer.with(order: @order, code: @svg).order_confirmation_email.deliver_now
+    @qrcode = GoogleQR.new(data: collect_order_order_url(@order), size: "200x200", margin: 4, error_correction: "L")
+    OrderMailer.with(order: @order, qrcode: @qrcode).order_confirmation_email.deliver_now #remove after everything is verified
 
     unless @order.confirmation_email_sent_at.present?
-      OrderMailer.with(order: @order, code: @svg).order_confirmation_email.deliver_now
+      OrderMailer.with(order: @order, qrcode: @qrcode).order_confirmation_email.deliver_now
       @order.update(confirmation_email_sent_at: DateTime.now)
     end
   end

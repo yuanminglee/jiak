@@ -34,13 +34,18 @@
       
     </tbody>
   </table>
-  
+  <p><%= @order.status %></p>
+  <p id="demo2"></p>
 </div>
 
 <script>
   const collectButton = document.getElementById('collect');
+  console.log('<%= @order.status %>')
   collectButton.addEventListener('click', () => {
-    <%= @order.update(status: 'Collected') %>
+    
+     console.log('<%= @order.update(status: "Collected") %>')
+     console.log('<%= @order.status %>')
+     document.getElementById("demo2").innerHTML = "<%= @order.status %>"
     
   });
 </script>
