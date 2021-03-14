@@ -1,6 +1,6 @@
 require 'rqrcode'
 class OrdersController < ApplicationController
-  before_action :find_order, only: %i[show edit update update_price cancel confirm success]
+  before_action :find_order, only: %i[show edit update update_price cancel confirm success collect_order]
   after_action :update_price, only: %i[update]
 
   def show
@@ -19,39 +19,40 @@ class OrdersController < ApplicationController
     session = Stripe::Checkout::Session.create(
       payment_method_types: ['card'],
       line_items: @grouped_line_items,
-      success_url: success_order_url(@order),
+      success_url:  collect_order_order_url(@order),
       cancel_url: order_url(@order)
     )
 
     @order.update(checkout_session_id: session.id)
     flash[:notice] = "Thanks for your payment. Your order is confirmed!"
-    
-    
   end
 
   def success
     authorize @order
 
+    @order.update(status: "Confirmed")
+
     qrcode = RQRCode::QRCode.new(success_order_path(@order))
-    @svg = qrcode.as_svg(
-      offset: 0,
-      color: '000',
-      shape_rendering: 'crispEdges',
-      module_size: 6,
-      standalone: true
-    )
-    
+    # @svg = qrcode.as_svg(
+    #   offset: 0,
+    #   color: '000',
+    #   shape_rendering: 'crispEdges',
+    #   module_size: 6,
+    #   standalone: true
+    # )
+
+    @svg = GoogleQR.new(data: "www.google.com", size: "500x500", margin: 4, error_correction: "L")
 
     OrderMailer.with(order: @order, code: @svg).order_confirmation_email.deliver_now
-    raise
 
     unless @order.confirmation_email_sent_at.present?
       OrderMailer.with(order: @order, code: @svg).order_confirmation_email.deliver_now
       @order.update(confirmation_email_sent_at: DateTime.now)
     end
+  end
 
-    session = Stripe::Checkout::Session.retrieve(@order.checkout_session_id)
-    @customer = Stripe::Customer.retrieve(session.customer)
+  def collect_order
+    authorize @order
 
     @grouped_line_items = @order.line_items.group_by(&:meal).map do |meal, line_items|
       {
@@ -62,10 +63,6 @@ class OrdersController < ApplicationController
         quantity: line_items.sum(&:quantity)
       }
     end
-
-    
-
-    
   end
 
   def create
@@ -93,7 +90,7 @@ class OrdersController < ApplicationController
 
     if @order.save!
       redirect_to edit_order_path(@order),
-      notice: "#{@order.line_items.last.quantity} x #{@order.line_items.last.meal.name} added!"
+                  notice: "#{@order.line_items.last.quantity} x #{@order.line_items.last.meal.name} added!"
     else
       flash[:alert] = "Order not saved"
     end

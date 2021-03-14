@@ -108,6 +108,7 @@ GEM
       sassc (>= 1.11)
     globalid (0.4.2)
       activesupport (>= 4.2.0)
+    google-qr (0.2.2)
     http-accept (1.7.0)
     http-cookie (1.0.3)
       domain_name (~> 0.5)
@@ -298,6 +299,7 @@ DEPENDENCIES
   dotenv-rails
   faker
   font-awesome-sass
+  google-qr (~> 0.2.2)
   httparty
   jbuilder (~> 2.7)
   letter_opener

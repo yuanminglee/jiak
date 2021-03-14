@@ -15,6 +15,7 @@ Rails.application.routes.draw do
     member do
       patch 'cancel'
       get 'success'
+      get 'collect_order'
       
     end
     resources :line_items, except: :destroy

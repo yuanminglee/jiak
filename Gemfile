@@ -41,6 +41,7 @@ gem 'stripe'
 gem 'stripe_event'
 gem 'rqrcode'
 gem 'letter_opener', group: :development
+gem 'google-qr', '~> 0.2.2'
 
 group :development, :test do
   gem 'pry-byebug'

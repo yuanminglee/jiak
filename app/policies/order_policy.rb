@@ -33,6 +33,10 @@ class OrderPolicy < ApplicationPolicy
     true
   end
 
+  def collect_order?
+    true
+  end
+
   private
 
   def my_restaurant_or_my_order
