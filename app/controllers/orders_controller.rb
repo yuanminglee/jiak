@@ -56,6 +56,7 @@ class OrdersController < ApplicationController
   def update_collect_order
     authorize @order
     @order.update(status: 'Collected')
+    redirect_back fallback_location: root_path, notice: "Order has been collected!"
   end
 
   def create

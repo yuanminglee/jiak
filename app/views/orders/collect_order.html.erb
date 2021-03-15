@@ -29,7 +29,16 @@
         <td class="text-right font-weight-bold"><%= @order.total_price.format %></td>
       </tr>
       <tr class="pb-0">
-        <td colspan="3" class="p-0"><%= button_to "Collect", update_collect_order_order_path, method: :patch, class: 'btn btn-dark w-100' %></td>
+        <td colspan="3" class="p-0">
+          
+          <% unless @order.status == "Collected" %>
+            <%= button_to "Collect", update_collect_order_order_path, method: :patch, class: 'btn btn-dark w-100' %>
+          <% else %>
+            <div class='btn btn-dark w-100'>Order collected</div>
+          <% end %>
+            
+          
+        </td>
       </tr>
       
     </tbody>
