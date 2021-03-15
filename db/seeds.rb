@@ -13,9 +13,9 @@ def generate_ingredients(num_ingredients)
   ingredients.map(&:downcase).join(", ")
 end
 
-def random_date_by_dow(start_date, end_date, dow_string)
-  dows = dow_string.split(",").map(&:to_i)
-  filtered_dates = (start_date..end_date).select { |date| dows.include? date.wday }
+def random_date_by_dow(start_date, end_date, dows)
+  dow_nums = dows.map { |dow| Date::DAYNAMES.index(dow) }
+  filtered_dates = (start_date..end_date).select { |date| dow_nums.include? date.wday }
   filtered_dates.sample
 end
 
@@ -83,7 +83,7 @@ addresses.each do |address|
     description: Faker::Restaurant.description,
     address: address,
     collection_time: Time.new(2021,1,1,rand(0..11),0,0),
-    opening_days: ("1".."7").to_a.sample(3).sort.join(","),
+    opening_days: Date::DAYNAMES.sample(3),
     user: User.where(is_chef: true).sample
   )
   puts "Restaurant created: #{restaurant.name}. Attaching photo..."
