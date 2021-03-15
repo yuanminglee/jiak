@@ -11,9 +11,11 @@
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
       <% if user_signed_in? %>
-        <li class="nav-item active">
-          <%= link_to "Restaurants", restaurants_path, class: "nav-link" %>
-        </li>
+        <% if policy(Restaurant).new? %>
+          <li class="nav-item active">
+            <%= link_to "Own Restaurants", owned_restaurants_path, class: "nav-link" %>
+          </li>
+        <% end %>   
         <% if policy(Restaurant).new? %>
           <li class="nav-item">
             <%= link_to "Create restaurant", new_restaurant_path, class: "nav-link" %>
