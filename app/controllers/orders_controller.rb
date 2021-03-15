@@ -1,6 +1,6 @@
 require 'rqrcode'
 class OrdersController < ApplicationController
-  before_action :find_order, only: %i[show edit update update_price cancel confirm success collect_order]
+  before_action :find_order, only: %i[show edit update update_price cancel confirm success collect_order update_collect_order]
   after_action :update_price, only: %i[update]
 
   def show
@@ -19,7 +19,7 @@ class OrdersController < ApplicationController
     session = Stripe::Checkout::Session.create(
       payment_method_types: ['card'],
       line_items: @grouped_line_items,
-      success_url:  collect_order_order_url(@order),
+      success_url:  success_order_url(@order),
       cancel_url: order_url(@order)
     )
 
@@ -32,7 +32,6 @@ class OrdersController < ApplicationController
 
     @order.update(status: "Confirmed")
     @qrcode = GoogleQR.new(data: collect_order_order_url(@order), size: "200x200", margin: 4, error_correction: "L")
-    OrderMailer.with(order: @order, qrcode: @qrcode).order_confirmation_email.deliver_now #remove after everything is verified
 
     unless @order.confirmation_email_sent_at.present?
       OrderMailer.with(order: @order, qrcode: @qrcode).order_confirmation_email.deliver_now
@@ -52,6 +51,11 @@ class OrdersController < ApplicationController
         quantity: line_items.sum(&:quantity)
       }
     end
+  end
+
+  def update_collect_order
+    authorize @order
+    @order.update(status: 'Collected')
   end
 
   def create

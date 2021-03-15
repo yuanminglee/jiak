@@ -29,23 +29,10 @@
         <td class="text-right font-weight-bold"><%= @order.total_price.format %></td>
       </tr>
       <tr class="pb-0">
-        <td colspan="3" class="p-0"><button id="collect" class="btn btn-dark w-100" >Collect</button></td>
+        <td colspan="3" class="p-0"><%= button_to "Collect", update_collect_order_order_path, method: :patch, class: 'btn btn-dark w-100' %></td>
       </tr>
       
     </tbody>
   </table>
-  <p><%= @order.status %></p>
-  <p id="demo2"></p>
 </div>
 
-<script>
-  const collectButton = document.getElementById('collect');
-  console.log('<%= @order.status %>')
-  collectButton.addEventListener('click', () => {
-    
-     console.log('<%= @order.update(status: "Hello") %>')
-     console.log('<%= @order.status %>')
-     document.getElementById("demo2").innerHTML = "<%= @order.status %>"
-    
-  });
-</script>
