@@ -29,6 +29,18 @@ class OrderPolicy < ApplicationPolicy
     my_restaurant_or_my_order
   end
 
+  def success?
+    true
+  end
+
+  def collect_order?
+    true
+  end
+
+  def update_collect_order?
+    true
+  end
+
   private
 
   def my_restaurant_or_my_order

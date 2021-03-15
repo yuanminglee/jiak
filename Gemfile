@@ -40,6 +40,9 @@ gem 'pundit'
 gem 'httparty'
 gem 'stripe'
 gem 'stripe_event'
+gem 'rqrcode'
+gem 'letter_opener', group: :development
+gem 'google-qr', '~> 0.2.2'
 gem 'pg_search', '~> 2.3.0'
 
 group :development, :test do

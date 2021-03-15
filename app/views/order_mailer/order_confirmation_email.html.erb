@@ -1,0 +1,19 @@
+Dear <%= @order.user.name %>,
+
+<p>We've got your order!</p>
+    <p>
+    Order Number # <%= @order.id %><br>
+    Collection Date: <%= @order.collection_date %><br>
+    Collection Time: <%= @order.restaurant.collection_time.strftime('%l:%M%p') %><br>
+    --------------------------
+    </p>
+    <p>Name: <%= @order.user.name %></p>
+    <p>Meals:</p>
+    <ul>
+      <% @order.line_items.each do |line_item| %>
+        <li><%= line_item.meal.name %> x <%= line_item.quantity %></li>
+      <% end %>
+    </ul>
+    <p>Total: <%= @order.total_price.format %> </p>
+    </p>
+    <img src="https://chart.googleapis.com/chart?cht=qr&chl=<%=  @qrcode %>&chs=500x500&chld=L%7C4" alt="QR code">
