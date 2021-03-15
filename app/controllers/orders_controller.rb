@@ -19,7 +19,7 @@ class OrdersController < ApplicationController
     session = Stripe::Checkout::Session.create(
       payment_method_types: ['card'],
       line_items: @grouped_line_items,
-      success_url:  success_order_url(@order),
+      success_url:  collect_order_order_url(@order),
       cancel_url: order_url(@order)
     )
 
