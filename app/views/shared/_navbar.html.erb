@@ -20,12 +20,17 @@
           </li>
         <% end %>
         <li class="nav-item dropdown">
-          <%= link_to 'Notifications', , data: { toggle: "dropdown" }, 'aria-haspopup': true, 'aria-expanded': false do %>
-            <i class="fas fa-envelope fa-2x"></i>
+          <%= button_tag class: "btn btn-primary", id: "navbarDropdown", data: { toggle: "dropdown" }, 'aria-haspopup': true, 'aria-expanded': false do %>
+            Notifications<span class="badge badge-light"><%= current_user.notifications.unread.count %></span>
           <% end %>
+
           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-            <%= link_to "Profile", user_profile_path, class: "dropdown-item" %>
-            <%= link_to "Log out", destroy_user_session_path, method: :delete, class: "dropdown-item" %>
+            <% current_user.notifications.unread.each do |notification| %>
+              <div class="d-flex justify-content-between">
+                <%= link_to notification.to_notification.message, notification.to_notification.url, class: "dropdown-item" %>
+                <%= link_to "X", mark_as_read_notification_path(notification), method: :patch, class: "dropdown-item text-right" %>
+              </div>
+            <% end %>
           </div>
         </li>
         <li class="nav-item dropdown">

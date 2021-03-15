@@ -24,7 +24,8 @@ class OrderNotification < Noticed::Base
   # Define helper methods to make rendering easier.
 
   def message
-    t(".message")
+    order = params[:order]
+    "New order from #{order.user.name} for #{order.collection_date}: #{order.total_price.format}"
   end
 
   def url

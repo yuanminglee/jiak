@@ -21,7 +21,11 @@ Rails.application.routes.draw do
 
   resources :line_items, only: :destroy
 
-  resources :notifications
+  resources :notifications do
+    member do
+      patch 'mark_as_read'
+    end
+  end
 
   mount StripeEvent::Engine, at: '/stripe-webhooks'
 end
