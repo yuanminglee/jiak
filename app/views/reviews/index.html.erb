@@ -43,16 +43,7 @@
           %>
         <% end %>
         <%= link_to "Reviews", restaurant_reviews_path(@restaurant), class: "btn btn-ghost" %>
-        <%= link_to "Back", restaurants_path, class: "btn btn-ghost" %>
-      </div>
-
-      <div class="container mt-3 pl-1">
-        <h2>Select date to order</h2>
-        <%= simple_form_for @order do |f| %>
-          <%= f.input :collection_date, label: false, as: :date, html5: true %>
-          <%= f.hidden_field :restaurant_id, :value => @order.restaurant.id %>
-          <%= f.button :submit, "Start ordering", :class => "btn btn-flat w-100" %>
-        <% end %>
+        <%= link_to "Back", restaurant_path(@restaurant), class: "btn btn-ghost" %>
       </div>
 
     </div>
@@ -67,4 +58,9 @@
   </div>
 </div>
 
-<%= render 'meals', restaurant: @restaurant %>
+<%= render 'reviews', restaurant: @restaurant %>
+
+<%= simple_form_for([ @restaurant, @review ],remote: true) do |f| %>
+  <%= f.input :content, label: false, as: :text %>
+  <%= f.button :submit %>
+<% end %>
