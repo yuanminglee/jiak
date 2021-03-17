@@ -3,7 +3,7 @@
     <%= cl_image_tag @restaurant.photo.key %>
   <% else %>
     <%= image_tag ('https://raw.githubusercontent.com/lewagon/fullstack-images/master/uikit/breakfast.jpg') %>
-  <% end %> 
+  <% end %>
 
   <div class="card-trip-title">
     <%= "My restaurant" if current_user == @restaurant.user %>
@@ -31,7 +31,7 @@
       </p>
 
       <% unless @restaurant.reviews.empty? %>
-        <p><%= @restaurant.reviews.sum(& :rating)/@restaurant.reviews.size%> <i class="fas fa-star fa-sm "></i> | <%= pluralize @restaurant.reviews.size, "review" %> </p> 
+        <p><%= @restaurant.reviews.sum(&:rating).fdiv(@restaurant.reviews.size).round(2) %><i class="fas fa-star fa-sm "></i> | <%= pluralize @restaurant.reviews.size, "review" %></p>
       <% else %>
         <p><%= pluralize @restaurant.reviews.size, "review" %></p>
       <% end %>
