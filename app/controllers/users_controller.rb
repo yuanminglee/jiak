@@ -15,4 +15,16 @@ class UsersController < ApplicationController
 
     @earnings = @orders.sum(&:total_price)
   end
+
+  def edit
+    authorize @user
+  end
+
+  def update
+    authorize @user
+
+    @user.update(params[:users])
+    redirect_to user_profile_path(@user)
+  end
+
 end

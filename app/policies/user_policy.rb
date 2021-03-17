@@ -12,4 +12,9 @@ class UserPolicy < ApplicationPolicy
   def earnings?
     record == user && user.is_chef
   end
+
+  def edit?
+    record == user
+  end
+
 end

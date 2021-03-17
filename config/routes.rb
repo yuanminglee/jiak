@@ -11,6 +11,9 @@ Rails.application.routes.draw do
     member do
       get 'orders'
     end
+    collection do
+      get 'owned'
+    end
   end
 
   resources :orders, except: :destroy do

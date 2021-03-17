@@ -32,4 +32,8 @@ class RestaurantPolicy < ApplicationPolicy
   def orders?
     user.is_chef && record.user == user
   end
+
+  def owned?
+    user.is_chef
+  end
 end
