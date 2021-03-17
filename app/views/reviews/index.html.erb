@@ -30,6 +30,10 @@
         <% end %>
       </p>
 
+      <p><%= @restaurant.reviews.sum(& :rating)/@restaurant.reviews.size%> <i class="fas fa-star fa-sm "></i> | <%= pluralize @restaurant.reviews.size, "review" %> </p> 
+      
+     
+      
       <div class="btn-group mt-3" role="group">
         <% if policy(@restaurant).edit? %>
           <%= link_to 'Add meal', new_restaurant_meal_path(@restaurant), class: "btn btn-ghost" %>
@@ -61,6 +65,7 @@
 <%= render 'reviews', restaurant: @restaurant %>
 
 <%= simple_form_for([ @restaurant, @review ],remote: true) do |f| %>
+  <%= f.input :rating, collection: (1..5).to_a, label: "Rate your experience" %>
   <%= f.input :content, label: false, as: :text %>
-  <%= f.button :submit %>
+  <%= f.button :submit,class: "btn btn-ghost" %>
 <% end %>

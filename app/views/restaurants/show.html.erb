@@ -29,6 +29,7 @@
           <span class="badge badge-dark w-10"><%= day %></span>
         <% end %>
       </p>
+      <p><%= @restaurant.reviews.sum(& :rating)/@restaurant.reviews.size%> <i class="fas fa-star fa-sm "></i> | <%= pluralize @restaurant.reviews.size, "review" %> </p> 
 
       <div class="btn-group mt-3" role="group">
         <% if policy(@restaurant).edit? %>

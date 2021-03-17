@@ -6,7 +6,7 @@ Rails.application.routes.draw do
 
   resources :restaurants do
     resources :meals
-    resources :reviews, only: [:index, :create ]
+    resources :reviews, only: [:index, :create]
     member do
       get 'orders'
     end
