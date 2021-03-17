@@ -13,7 +13,14 @@ class UsersController < ApplicationController
       restaurant.orders
     end.flatten.reject { |order| order.status.in? ["Draft", "Cancelled"] }
 
-    @earnings = @orders.sum(&:total_price)
+    @earnings_money = @orders.sum(&:total_price)
+
+    if @earnings_money.zero?
+      @earnings = "$0"
+    else
+      @earnings = @earnings_money.format
+    end
+
   end
 
   def edit
