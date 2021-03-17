@@ -31,6 +31,9 @@
       <div class="card-product-infos">
         <h2><%= link_to restaurant.name.upcase, restaurant_path(restaurant), class: "fw-bold" %></h2>
         <p><%= restaurant.description.truncate(650) %></p>
+        <% if restaurant.reviews.present? %>
+          <p><%= restaurant.reviews.sum(&:rating)&.fdiv(restaurant.reviews.size).round(2) %><i class="fas fa-star fa-sm "></i> | <%= pluralize restaurant.reviews.size, "review" %></p>
+        <% end %>
         <% restaurant.opening_days.each do |day| %>
           <span class="badge badge-dark w-10"><%= day %></span>
         <% end %>

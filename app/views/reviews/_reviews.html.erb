@@ -1,0 +1,17 @@
+<div class = "mb-3">
+<h3 class="mt-5 font-weight-bold"><%= pluralize restaurant.reviews.size, "review" %></h3>
+<div id="reviews">
+  <% if restaurant.reviews.blank? %>
+    Be the first to leave a review for <%= @restaurant.name %>
+  <% else %>
+    <% restaurant.reviews.each do |review| %>
+      <b><%= review.user.name %></b> 
+      <% review.rating.to_i.times do  %>
+        <i class="fas fa-star fa-sm "></i>
+      <% end %>
+      <p id="review-<%= review.id %>"><%= review.content %></p>
+    <% end %>
+  <% end %>
+</div>
+</div>
+

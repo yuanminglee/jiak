@@ -97,17 +97,5 @@ class OrdersController < ApplicationController
     redirect_to restaurant_path(@order.restaurant), notice: "Your order is cancelled!"
   end
 
-  private
-
-  def update_price
-    @order.update_total_price
-  end
-
-  def find_order
-    @order = Order.find(params[:id])
-  end
-
-  def order_params
-    params.require(:order).permit(:collection_date, :restaurant_id, :status, line_item: %i[meal_id quantity])
-  end
+ 
 end
