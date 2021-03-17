@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   root to: 'pages#home'
+  get "/learnmore", to: "pages#learn_more"
 
   devise_for :users
   get 'profile', to: 'users#show', as: 'user_profile'
@@ -9,6 +10,9 @@ Rails.application.routes.draw do
     resources :reviews, only: [:index, :create]
     member do
       get 'orders'
+    end
+    collection do
+      get 'owned'
     end
   end
 

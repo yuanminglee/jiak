@@ -36,7 +36,7 @@ class RestaurantsController < ApplicationController
     @restaurant = Restaurant.new(restaurant_params)
 
     if @restaurant.save!
-      redirect_to restaurant_path(@restaurant)
+      redirect_to owned_restaurants_path
     end
   end
 
@@ -61,6 +61,11 @@ class RestaurantsController < ApplicationController
   def orders
     authorize @restaurant
     @orders = @restaurant.orders.order(:collection_date)
+  end
+
+  def owned
+    @restaurants = current_user.restaurants
+    authorize @restaurants
   end
 
   private
