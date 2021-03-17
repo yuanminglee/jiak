@@ -15,6 +15,8 @@ class ReviewsController < ApplicationController
 
     if @review.save
       redirect_to restaurant_reviews_path(@restaurant, anchor: "review-#{@review.id}")
+    else
+      render :index
     end
   end
 
