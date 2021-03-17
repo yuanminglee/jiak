@@ -44,6 +44,7 @@ gem 'rqrcode'
 gem 'letter_opener', group: :development
 gem 'google-qr', '~> 0.2.2'
 gem 'pg_search', '~> 2.3.0'
+gem 'turbolinks_render'
 
 group :development, :test do
   gem 'pry-byebug'
