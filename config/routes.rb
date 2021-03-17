@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   root to: 'pages#home'
+  get "/learnmore", to: "pages#learn_more"
 
   devise_for :users
   get 'profile', to: 'users#show', as: 'user_profile'
