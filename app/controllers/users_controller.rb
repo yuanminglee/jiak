@@ -4,4 +4,15 @@ class UsersController < ApplicationController
 
     authorize @user
   end
+
+  def earnings
+    @user = current_user
+    authorize @user
+
+    @orders = current_user.restaurants.map do |restaurant|
+      restaurant.orders
+    end.flatten.reject { |order| order.status.in? ["Draft", "Cancelled"] }
+
+    @earnings = @orders.sum(&:total_price)
+  end
 end

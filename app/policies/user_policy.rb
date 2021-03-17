@@ -8,4 +8,8 @@ class UserPolicy < ApplicationPolicy
   def show?
     record == user
   end
+
+  def earnings?
+    record == user && user.is_chef
+  end
 end
